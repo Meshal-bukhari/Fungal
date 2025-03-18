@@ -1,0 +1,2620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fungal Diseases Study Guide</title>
+    <style>
+        :root {
+            --superficial-color: #4682B4;
+            --superficial-light: #e6f2ff;
+            --dermato-color: #CD853F;
+            --dermato-light: #faf0e6;
+            --malassezia-color: #9370DB;
+            --malassezia-light: #f0e6ff;
+            --subcutaneous-color: #20B2AA;
+            --subcutaneous-light: #e6fffa;
+            --systemic-color: #B22222;
+            --systemic-light: #ffe6e6;
+            --header-color: #333;
+            --candida-color: #FF8C00;
+            --candida-light: #fff3e6;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--superficial-color), var(--systemic-color));
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/api/placeholder/800/600') center/cover no-repeat;
+            opacity: 0.15;
+            z-index: 1;
+        }
+        
+        nav {
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 10px;
+        }
+        
+        .tabs li button {
+            background-color: #f1f1f1;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .tabs li button:hover {
+            background-color: #e1e1e1;
+        }
+        
+        .tabs li button.active-superficial {
+            background-color: var(--superficial-color);
+            color: white;
+        }
+        
+        .tabs li button.active-dermato {
+            background-color: var(--dermato-color);
+            color: white;
+        }
+        
+        .tabs li button.active-malassezia {
+            background-color: var(--malassezia-color);
+            color: white;
+        }
+        
+        .tabs li button.active-subcutaneous {
+            background-color: var(--subcutaneous-color);
+            color: white;
+        }
+        
+        .tabs li button.active-systemic {
+            background-color: var(--systemic-color);
+            color: white;
+        }
+        
+        .tabs li button.active-candida {
+            background-color: var(--candida-color);
+            color: white;
+        }
+        
+        .main-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            display: none;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            transition: all 0.3s;
+        }
+        
+        .superficial-section {
+            background-color: var(--superficial-light);
+            border-left: 5px solid var(--superficial-color);
+        }
+        
+        .dermato-section {
+            background-color: var(--dermato-light);
+            border-left: 5px solid var(--dermato-color);
+        }
+        
+        .malassezia-section {
+            background-color: var(--malassezia-light);
+            border-left: 5px solid var(--malassezia-color);
+        }
+        
+        .subcutaneous-section {
+            background-color: var(--subcutaneous-light);
+            border-left: 5px solid var(--subcutaneous-color);
+        }
+        
+        .systemic-section {
+            background-color: var(--systemic-light);
+            border-left: 5px solid var(--systemic-color);
+        }
+        
+        .candida-section {
+            background-color: var(--candida-light);
+            border-left: 5px solid var(--candida-color);
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .disease-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .superficial-card {
+            border-top: 3px solid var(--superficial-color);
+        }
+        
+        .dermato-card {
+            border-top: 3px solid var(--dermato-color);
+        }
+        
+        .malassezia-card {
+            border-top: 3px solid var(--malassezia-color);
+        }
+        
+        .subcutaneous-card {
+            border-top: 3px solid var(--subcutaneous-color);
+        }
+        
+        .systemic-card {
+            border-top: 3px solid var(--systemic-color);
+        }
+        
+        .candida-card {
+            border-top: 3px solid var(--candida-color);
+        }
+        
+        .disease-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .disease-card h3 {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .disease-card .frequency-badge {
+            font-size: 0.8rem;
+            background-color: #f1f1f1;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-weight: normal;
+            margin-left: 10px;
+        }
+        
+        .key-points {
+            margin-top: 10px;
+        }
+        
+        .key-points h4 {
+            margin-bottom: 5px;
+            font-size: 1rem;
+            color: #444;
+        }
+        
+        .key-points ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        .key-points ul li {
+            margin-bottom: 5px;
+            position: relative;
+        }
+        
+        .key-points ul li:before {
+            content: "•";
+            color: var(--superficial-color);
+            font-weight: bold;
+            position: absolute;
+            left: -15px;
+        }
+        
+        .dermato-section .key-points ul li:before {
+            color: var(--dermato-color);
+        }
+        
+        .malassezia-section .key-points ul li:before {
+            color: var(--malassezia-color);
+        }
+        
+        .subcutaneous-section .key-points ul li:before {
+            color: var(--subcutaneous-color);
+        }
+        
+        .systemic-section .key-points ul li:before {
+            color: var(--systemic-color);
+        }
+        
+        .candida-section .key-points ul li:before {
+            color: var(--candida-color);
+        }
+        
+        .card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .expanded .card-content {
+            max-height: 2000px;
+        }
+        
+        .expand-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+        
+        .expanded .expand-icon {
+            transform: rotate(45deg);
+        }
+        
+        .mnemonic-box {
+            background-color: rgba(255,255,255,0.7);
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border: 1px dashed #aaa;
+        }
+        
+        .superficial-section .mnemonic-box {
+            border-left: 4px solid var(--superficial-color);
+        }
+        
+        .dermato-section .mnemonic-box {
+            border-left: 4px solid var(--dermato-color);
+        }
+        
+        .malassezia-section .mnemonic-box {
+            border-left: 4px solid var(--malassezia-color);
+        }
+        
+        .subcutaneous-section .mnemonic-box {
+            border-left: 4px solid var(--subcutaneous-color);
+        }
+        
+        .systemic-section .mnemonic-box {
+            border-left: 4px solid var(--systemic-color);
+        }
+        
+        .candida-section .mnemonic-box {
+            border-left: 4px solid var(--candida-color);
+        }
+        
+        .mnemonic-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+            font-size: 0.9rem;
+        }
+        
+        .diagnosis-box {
+            background-color: #e6f7ff;
+            border-left: 4px solid #1e90ff;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin-top: 10px;
+        }
+        
+        .treatment-box {
+            background-color: #fff9e6;
+            border-left: 4px solid #ffd700;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin-top: 10px;
+        }
+        
+        .unique-box {
+            background-color: #e6ffe6;
+            border-left: 4px solid #32cd32;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin-top: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 40px;
+        }
+        
+        .risk-badge {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .search-wrapper:focus-within {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            color: #333;
+            background: transparent;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: #999;
+        }
+
+        .search-button {
+            background: none;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .search-button:hover {
+            color: #333;
+        }
+        
+        /* Add these styles to your existing CSS */
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .section.search-result {
+            display: block;
+        }
+        
+        mark {
+            background-color: #ffdc00 !important;
+            color: #000 !important;
+            padding: 0 2px !important;
+            border-radius: 3px !important;
+            font-weight: bold !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+            text-decoration: underline !important;
+        }
+        
+        .subsection {
+            transition: background-color 0.3s ease;
+        }
+        
+        .subsection.has-match {
+            display: block;
+            background-color: rgba(255, 250, 230, 0.5);
+            padding: 5px;
+            border-radius: 5px;
+            border-left: 3px solid #ffdc00;
+            margin: 5px 0;
+        }
+        
+        .subsection:not(.has-match):not(.parent-has-match) {
+            display: none;
+        }
+        
+        .section-title.has-match {
+            background-color: rgba(255, 250, 230, 0.5);
+            border-radius: 5px;
+            padding: 5px;
+        }
+        
+        .disease-card {
+            transition: background-color 0.3s ease;
+        }
+        
+        .disease-card.has-match {
+            display: block;
+            background-color: rgba(255, 250, 230, 0.5);
+            border-radius: 5px;
+            border-left: 3px solid #ffdc00;
+            margin: 5px 0;
+        }
+        
+        .card-content {
+            transition: display 0.3s ease;
+        }
+        
+        .has-match .card-content {
+            display: block !important;
+        }
+        
+        .key-points div.has-match, 
+        .diagnosis-box.has-match, 
+        .treatment-box.has-match {
+            display: block;
+            background-color: rgba(255, 250, 230, 0.7);
+            padding: 5px;
+            border-radius: 5px;
+            border-left: 3px solid #ffdc00;
+            margin: 5px 0;
+        }
+        
+        h3.has-match, h4.has-match {
+            background-color: rgba(255, 250, 230, 0.5);
+            border-radius: 5px;
+            padding: 5px;
+        }
+        
+        .mnemonic-box.has-match {
+            border-left: 3px solid #ffdc00;
+            background-color: rgba(255, 250, 230, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Fungal Diseases Study Guide</h1>
+        <p>Interactive guide for memorizing key fungal infections</p>
+    </header>
+    
+    <div class="search-container">
+        <div class="search-wrapper">
+            <input type="text" id="searchInput" placeholder="Search fungal diseases..." class="search-input">
+            <button class="search-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <nav>
+        <ul class="tabs">
+            <li><button onclick="showSection('superficial')" class="active-superficial">I. SUPERFICIAL MYCOSES</button></li>
+            <li><button onclick="showSection('dermato')" class="">II. DERMATOPHYTOSES</button></li>
+            <li><button onclick="showSection('malassezia')" class="">III. MALASSEZIA FOLLICULITIS</button></li>
+            <li><button onclick="showSection('subcutaneous')" class="">IV. SUBCUTANEOUS MYCOSES</button></li>
+            <li><button onclick="showSection('systemic')" class="">V. SYSTEMIC MYCOSES</button></li>
+            <li><button onclick="showSection('candida')" class="">VI. CANDIDIASIS</button></li>
+        </ul>
+    </nav>
+    
+    <div class="main-container">
+        <!-- I. SUPERFICIAL MYCOSES -->
+        <div id="superficial-section" class="section superficial-section active">
+            <div class="mnemonic-box">
+                <div class="mnemonic-title">SUPERFICIAL MYCOSES MNEMONIC: "TPP" - "Tinea Patterns Persist"</div>
+                <p><strong>T</strong>inea Versicolor - "Spaghetti and meatballs" on KOH, Malassezia<br>
+                <strong>P</strong>iedra - Nodules on hair shaft (Black & White varieties)<br>
+                <strong>T</strong>inea Nigra - Brown macule on palm, Hortaea werneckii</p>
+            </div>
+            
+            <!-- Tinea Versicolor -->
+            <div class="disease-card superficial-card" onclick="toggleCard(this)">
+                <h3>Tinea Versicolor (Pityriasis Versicolor) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance:</strong> Hypo- or hyperpigmented macules/patches, fine scale (may need scratching to see), often confluent.</li>
+                            <li><strong>Distribution:</strong> Upper trunk, shoulders (seborrheic areas), neck, face (children). "Inverse" in flexural areas.</li>
+                            <li><strong>Risk Factors:</strong> Heat, humidity, oily skin, hyperhidrosis, immunosuppression.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> "Spaghetti and meatballs" - yeast and short hyphae on KOH prep. More accurately "ziti and meatballs".</li>
+                                <li><strong>Special Stains:</strong> PAS highlights yeast and hyphae in stratum corneum.</li>
+                                <li><strong>Culture:</strong> Requires oil overlay (lipophilic yeast), generally not needed.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Topical):</strong> Selenium sulfide shampoo, ketoconazole shampoo, ciclopirox shampoo, zinc pyrithione shampoo (body washes). Imidazole creams (ketoconazole, clotrimazole), ciclopirox cream/gel/lotion (for localized areas).</li>
+                                <li><strong>Drug Selection (Oral - for extensive disease/failed topical):</strong> Fluconazole (200mg daily x 5-7 days, or weekly x 2-3 weeks, or 400mg single dose), Itraconazole (200mg daily x 5-7 days). Avoid oral ketoconazole due to risks. Terbinafine and Griseofulvin not good options</li>
+                                <li><strong>Dosing & Duration:</strong> Topical shampoos/creams typically 2-4 weeks. Oral regimens are short courses.</li>
+                                <li><strong>Maintenance Therapy:</strong> Crucial for recurrence prevention. Topical imidazole daily, antifungal shampoo 1-2 times weekly.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Malassezia furfur, Malassezia globosa.</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Asymptomatic, cosmetic concern, KOH "spaghetti and meatballs", recurrence common.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tinea Nigra -->
+            <div class="disease-card superficial-card" onclick="toggleCard(this)">
+                <h3>Tinea Nigra <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance:</strong> Solitary, sharply demarcated, brown to gray-green macule or patch, velvety or mild scale. Resembles acral melanocytic nevus but larger, lighter, no linear striations.</li>
+                            <li><strong>Distribution:</strong> Palms (most common), soles, neck, trunk.</li>
+                            <li><strong>Risk Factors:</strong> Tropical climates.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Septate pigmented hyphae on KOH prep.</li>
+                                <li><strong>Special Stains:</strong> Pigmented hyphae visible without special stains.</li>
+                                <li><strong>Culture:</strong> Hortaea werneckii - slow-growing, green to black colony.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Topical):</strong> Keratolytics (Whitfield ointment), azoles, allylamines.</li>
+                                <li><strong>Dosing & Duration:</strong> Several weeks to prevent recurrence.</li>
+                                <li><strong>Systemic Therapy:</strong> Not indicated.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Hortaea werneckii (formerly Exophiala werneckii).</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Dark macule on palm/sole, KOH pigmented hyphae, tropical locations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Piedra -->
+            <div class="disease-card superficial-card" onclick="toggleCard(this)">
+                <h3>Piedra (Black Piedra & White Piedra) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Black Piedra):</strong> Asymptomatic, hard, brown to black nodules firmly attached to hair shaft.</li>
+                            <li><strong>Appearance (White Piedra):</strong> Soft, less adherent nodules, white to light brown/red/green on hair shaft.</li>
+                            <li><strong>Distribution:</strong> Hair shaft (scalp - black, beard/pubic - white).</li>
+                            <li><strong>Risk Factors:</strong> Tropical climates, poor hygiene.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy (Black Piedra):</strong> Dematiaceous hyphae, asci with 8 ascospores in nodule crush prep.</li>
+                                <li><strong>Microscopy (White Piedra):</strong> Non-dematiaceous hyphae, blastoconidia, arthroconidia in nodule crush prep.</li>
+                                <li><strong>Culture (Black Piedra):</strong> Piedraia hortae - slow, green-black, velvety colony.</li>
+                                <li><strong>Culture (White Piedra):</strong> Trichosporon spp. - rapid, moist, cream-colored, yeast-like colony. Inhibited by cycloheximide.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Topical):</strong> 2% Ketoconazole shampoo. Oral terbinafine may be considered.</li>
+                                <li><strong>Mechanical:</strong> Clipping affected hair is crucial.</li>
+                                <li><strong>Dosing & Duration:</strong> Shampoo use until nodules clear, clipping as needed.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Piedraia hortae (Black), Trichosporon spp. (White).</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Nodules on hair shaft, KOH/microscopy, hair clipping treatment.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- II. DERMATOPHYTOSES -->
+        <div id="dermato-section" class="section dermato-section">
+            <div class="mnemonic-box">
+                <div class="mnemonic-title">DERMATOPHYTOSES MNEMONIC: "CCBUMP" - "Clinically Classified By Unique Mycotic Patterns"</div>
+                <p><strong>C</strong>apitis - Scalp, endothrix vs. ectothrix, kerion, favus<br>
+                <strong>C</strong>orporis - Annular lesions, central clearing, raised border<br>
+                <strong>C</strong>ruris - Groin, scrotum typically spared<br>
+                <strong>B</strong>arbae - Beard area, inflammatory/superficial<br>
+                <strong>U</strong>nguium - Nails, DLSO most common pattern<br>
+                <strong>M</strong>anuum - Hand, one hand two feet syndrome<br>
+                <strong>P</strong>edis - Feet, moccasin/interdigital/vesicular patterns</p>
+            </div>
+            
+            <!-- Tinea Capitis -->
+            <div class="disease-card dermato-card" onclick="toggleCard(this)">
+                <h3>Tinea Capitis (Scalp Ringworm) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance:</strong> Variable: scaling, patchy alopecia, "black dots" (broken hairs), kerion (inflammatory boggy plaque), pustules.</li>
+                            <li><strong>Distribution:</strong> Scalp, hair shafts.</li>
+                            <li><strong>Risk Factors:</strong> Children, household contact, contaminated fomites, Down syndrome.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Hyphae and arthroconidia within or around hair shafts on KOH prep. Endothrix vs. ectothrix patterns.</li>
+                                <li><strong>Special Stains:</strong> Chlorazol black stain enhances hyphae.</li>
+                                <li><strong>Wood's Lamp:</strong>  fluoresce (Microsporum - ectothrix) Microsporum canis (greenish fluorescence) Microsporum audouinii (blue-green fluorescence), bluish-white fluorescence (T. schoenleinii). T. tonsurans (endothrix) does not fluoresce.</li>
+                                <li><strong>Culture:</strong> Sabouraud dextrose agar, dermatophyte test medium (DTM).</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Oral - required for scalp infection):</strong> Griseofulvin (microsize or ultramicrosize), Terbinafine (children > 4 years and >20kg), Itraconazole (pulse or continuous), Fluconazole.</li>
+                                <li><strong>Topical Adjuncts:</strong> Antifungal shampoos (selenium sulfide, ketoconazole, ciclopirox) to reduce shedding and transmission, but not curative alone.</li>
+                                <li><strong>Dosing & Duration:</strong> Griseofulvin 6-8 weeks For microsize formulation: Children: 10-20 mg/kg/day in single or divided doses  ultramicrosize formulation (which has better bioavailability): Children: 5-10 mg/kg/day in single or divided doses, Terbinafine 3-4 weeks, Itraconazole 4-8 weeks, Fluconazole 3-6 weeks. Duration depends on clinical response.</li>
+                                <li><strong>Treatment Modifications:</strong> Kerion - may consider oral steroids to reduce inflammation and scarring for 7-10 days starting at 0.5 mg/kg/day and tapering to 0.. Household contact screening and treatment with shampoos.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Trichophyton tonsurans (endothrix, black dot, most common in US), Microsporum canis (ectothrix, gray patch, fluoresces), Trichophyton violaceum (endothrix, black dot).</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Pediatric age group, scalp involvement, alopecia, kerion, oral treatment required, endothrix vs ectothrix patterns.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tinea Corporis -->
+            <div class="disease-card dermato-card" onclick="toggleCard(this)">
+                <h3>Tinea Corporis (Body Ringworm) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance:</strong> Annular plaques with raised, scaly, erythematous border and central clearing. May be arcuate, circinate, concentric, oval, or figurate. Vesicles/pustules in active border suggest tinea. "Tinea incognito" - modified presentation due to topical steroid use (less scale, less raised border, more subtle).The lesions may be extensive or even vegetating, and a prolonged granulomatous reaction (as described by Majocchi) can develop.</li>
+                            <li><strong>Distribution:</strong> Trunk, extremities (excluding scalp, nails, palms, soles, groin). Often exposed skin.</li>
+                            <li><strong>Risk Factors:</strong> Contact with infected humans/animals, contaminated fomites, military housing, gyms, wrestling, outdoor activities.</li>
+                            <li><strong>Organisms:</strong> trichophyton Rubrum: Most common cause tinea corporis and Majochi granuloma. trichophyton concetricum: causative organism of imbricata. M. gypseum with bullous lesions </li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Hyaline, septate hyphae in stratum corneum on KOH prep.</li>
+                                <li><strong>Special Stains:</strong> Chlorazol black stain enhances hyphae. PAS stain on skin biopsy.</li>
+                                <li><strong>Culture:</strong> Sabouraud dextrose agar, dermatophyte test medium (DTM).</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Topical - for localized disease):</strong> Azole creams (ketoconazole, clotrimazole, miconazole), allylamine creams (terbinafine, naftifine), ciclopirox cream/gel/lotion.</li>
+                                <li><strong>Drug Selection (Oral - for extensive, inflammatory, or failed topical):</strong> Terbinafine, Itraconazole, Fluconazole. Griseofulvin is 2nd line.</li>
+                                <li><strong>Dosing & Duration:</strong> Topical 2-4 weeks. Oral Terbinafine 1-2 weeks, Itraconazole 1-2 weeks, Fluconazole 2-4 weeks. Duration depends on clinical clearance.</li>
+                                <li><strong>Treatment Modifications:</strong> "Tinea incognito" - stop topical steroid, treat as tinea corporis.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Trichophyton rubrum (most common worldwide), Trichophyton mentagrophytes, Microsporum canis (zoonotic).</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Annular lesions with central clearing, scaly raised border, KOH hyphae, topical or oral treatment depending on extent.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tinea Cruris -->
+            <div class="disease-card dermato-card" onclick="toggleCard(this)">
+                <h3>Tinea Cruris (Jock Itch) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance:</strong> Pruritic, sharply demarcated, erythematous, scaly plaques in inguinal folds and upper inner thighs. Raised, erythematous, scaly advancing border, may have vesicles/pustules. Scrotum usually spared. Can be unilateral or bilateral. Chronic infections may become leathery and lichenified.</li>
+                            <li><strong>Distribution:</strong> Inguinal folds, upper inner thighs, crural folds. May extend to abdomen and buttocks. Spares the scrotum ( Vs Candidiasis which involved scrotum)</li>
+                            <li><strong>Risk Factors:</strong> Male sex, warm/moist environment (scrotum), obesity, hyperhidrosis, tinea pedis, occlusive clothing.</li>
+                            <li><strong>Organisms:</strong> Tinea Rubrum: Most common cause of tinea cruris , usually chronic. Epidermophyton floccosum: Common in locker room epidemics and causative agent of eczema marginatum. Trichophyton mentagrophytes: More acute and severe infections, may rapidly spread to trunk and lower extremities. </li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Hyaline, septate hyphae in stratum corneum on KOH prep.</li>
+                                <li><strong>Special Stains:</strong> Chlorazol black stain enhances hyphae. PAS stain on skin biopsy.</li>
+                                <li><strong>Culture:</strong> Sabouraud dextrose agar, dermatophyte test medium (DTM).</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Topical):</strong> Azole creams (ketoconazole, clotrimazole, econazole), allylamine creams (terbinafine, naftifine), ciclopirox cream/gel/lotion.</li>
+                                <li><strong>Drug Selection (Oral - for extensive, inflammatory, or failed topical):</strong> Terbinafine, Itraconazole, Fluconazole. Griseofulvin 2nd line.</li>
+                                <li><strong>Dosing & Duration:</strong> Topical 2-4 weeks. Oral Terbinafine 1-2 weeks, Itraconazole 1-2 weeks, Fluconazole 1-2 weeks. Duration depends on clinical clearance.</li>
+                                <li><strong>Treatment Modifications:</strong> Hygiene measures (loose clothing, drying thoroughly), treat concomitant tinea pedis.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Epidermophyton floccosum, Trichophyton rubrum, Trichophyton mentagrophytes.</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Inguinal folds, sharply demarcated, pruritic, KOH hyphae, rule out candidiasis if scrotum involved or erosions/satellite pustules are present.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tinea Pedis -->
+            <div class="disease-card dermato-card" onclick="toggleCard(this)">
+                <h3>Tinea Pedis (Athlete's Foot) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Moccasin type):</strong> Diffuse hyperkeratosis, erythema, scaling, fissures on soles and lateral aspects of feet. Chronic, dry.</li>
+                            <li><strong>Appearance (Interdigital type):</strong> Erythema, scaling, fissures, maceration in web spaces, especially 4th and 5th. "Dermatophytosis complex" - bacterial superinfection.</li>
+                            <li><strong>Appearance (Vesicular/Inflammatory type):</strong> Vesicles and bullae, often on medial foot, inflammatory. Dermatophytid reaction possible.</li>
+                            <li><strong>Appearance (Ulcerative type):</strong> Ulcers and erosions in web spaces, often 4th web space, secondary bacterial infection common, seen in immunocompromised/diabetics.</li>
+                            <li><strong>Distribution:</strong> Soles, lateral feet, interdigital web spaces. May extend to dorsum.</li>
+                            <li><strong>Risk Factors:</strong> Occlusive footwear, communal showers, hyperhidrosis, diabetes, immunocompromise.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Hyaline, septate hyphae in stratum corneum on KOH prep.</li>
+                                <li><strong>Special Stains:</strong> Chlorazol black stain enhances hyphae. PAS stain on skin biopsy.</li>
+                                <li><strong>Culture:</strong> Sabouraud dextrose agar, dermatophyte test medium (DTM).</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Topical - most types):</strong> Azole creams (clotrimazole, miconazole, econazole), allylamine creams (terbinafine, naftifine), ciclopirox cream/gel/lotion. For moccasin type, consider agents with urea or lactic acid to aid penetration.</li>
+                                <li><strong>Drug Selection (Oral - for moccasin type, inflammatory, nail involvement, failed topical, diabetics, immunocompromised):</strong> Terbinafine, Itraconazole, Fluconazole. Griseofulvin is 2nds line.</li>
+                                <li><strong>Dosing & Duration:</strong> Topical 4-6 weeks, often longer for moccasin type. Oral Terbinafine 2 weeks, Itraconazole 1 week (pulse or continuous), Fluconazole 2-4 weeks. Onychomycosis (if present) requires longer oral duration.</li>
+                                <li><strong>Treatment Modifications:</strong> Interdigital type with bacterial superinfection - consider topical or oral antibiotics. Vesicular/inflammatory type - topical antifungal usually sufficient, but consider oral if severe dermatophytid reaction. Hygiene measures (dry feet, breathable footwear, antifungal powders).</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Trichophyton rubrum, Trichophyton interdigitale (formerly T. mentagrophytes var. interdigitale), Epidermophyton floccosum.</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Foot involvement, various clinical patterns (moccasin, interdigital, vesicular, ulcerative), KOH hyphae, hygiene crucial for prevention, consider bacterial superinfection.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tinea Manuum -->
+            <div class="disease-card dermato-card" onclick="toggleCard(this)">
+                <h3>Tinea Manuum (Hand Ringworm) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Dorsal Hand - Tinea Corporis-like):</strong> Annular plaque, scaly border, central clearing.</li>
+                            <li><strong>Appearance (Palmar/Digital - Tinea Manuum proper):</strong> Unilateral (often "one hand, two feet syndrome"), hyperkeratosis of palms and digits (especially creases), scaling, may be exfoliative, vesicular, or papular. Often chronic.</li>
+                            <li><strong>Distribution:</strong> Dorsal hand, palms, digits, interdigital spaces of hand.</li>
+                            <li><strong>Risk Factors:</strong> Often associated with tinea pedis, exposure to dermatophytes.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Hyaline, septate hyphae in stratum corneum on KOH prep.</li>
+                                <li><strong>Special Stains:</strong> Chlorazol black stain enhances hyphae. PAS stain on skin biopsy.</li>
+                                <li><strong>Culture:</strong> Sabouraud dextrose agar, dermatophyte test medium (DTM).</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Topical - Dorsal Hand type, may be sufficient):</strong> Azole creams, allylamine creams, ciclopirox cream/gel/lotion.</li>
+                                <li><strong>Drug Selection (Oral - Palmar/Digital type, often required due to hyperkeratosis):</strong> Terbinafine, Itraconazole, Fluconazole. Griseofulvin is not effective.</li>
+                                <li><strong>Dosing & Duration:</strong> Topical 4-6 weeks (dorsal hand). Oral Terbinafine 2-4 weeks, Itraconazole 2-4 weeks, Fluconazole 2-4 weeks (palmar/digital). Duration depends on clinical clearance and onychomycosis treatment if present.</li>
+                                <li><strong>Treatment Modifications:</strong> Keratolytics (urea cream, lactic acid) as adjuncts to topical or oral antifungals for palmar/digital type to reduce hyperkeratosis. Treat associated tinea pedis and onychomycosis.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Trichophyton rubrum, Trichophyton mentagrophytes, Epidermophyton floccosum.</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Hand involvement, unilateral palmar hyperkeratosis ("one hand, two feet syndrome"), KOH hyphae, oral treatment often needed for palmar type.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Tinea Faciei -->
+<div class="disease-card dermato-card" onclick="toggleCard(this)">
+    <h3>Tinea Faciei (Face Ringworm) <span class="frequency-badge"></span></h3>
+    <div class="expand-icon">+</div>
+    <div class="card-content">
+        <div class="key-points">
+            <h4>Clinical Presentation:</h4>
+            <ul>
+                <li><strong>Appearance:</strong> Variable presentation - some cases have classic dermatophyte features (scale, annular configuration, pustules at border), but often presents with subtle erythema, scale, or hyperpigmented lesions with minimal annular features.</li>
+                <li><strong>Distribution:</strong> Face (specific areas include perinasal, perioral, cheeks), sparing the beard area (which would be classified as Tinea Barbae).</li>
+                <li><strong>Risk Factors:</strong> Similar to Tinea Corporis - exposure to infected individuals, animals, or fomites.</li>
+            </ul>
+            
+            <div class="diagnosis-box">
+                <h4>Morphology & Diagnostics:</h4>
+                <ul>
+                    <li><strong>Microscopy:</strong> Hyaline, septate hyphae in stratum corneum on KOH prep (similar to Tinea Corporis).</li>
+                    <li><strong>Special Stains:</strong> Chlorazol black stain enhances hyphae, PAS stain on skin biopsy.</li>
+                    <li><strong>Culture:</strong> Sabouraud dextrose agar, dermatophyte test medium (DTM).</li>
+                    <li><strong>Diagnostic Challenge:</strong> Requires high index of suspicion due to variable and subtle presentations.</li>
+                </ul>
+            </div>
+            
+            <div class="treatment-box">
+                <h4>Treatment Specifics:</h4>
+                <ul>
+                    <li><strong>Drug Selection (Topical):</strong> Azole creams (ketoconazole, clotrimazole, miconazole), allylamine creams (terbinafine, naftifine), similar to Tinea Corporis.</li>
+                    <li><strong>Drug Selection (Oral):</strong> For extensive or resistant cases - terbinafine, itraconazole, fluconazole.</li>
+                    <li><strong>Dosing & Duration:</strong> Topical 2-4 weeks, oral antifungals as per Tinea Corporis protocols.</li>
+                    <li><strong>Treatment Modifications:</strong> Care with facial applications, avoid steroid combinations which can lead to Tinea Incognito.</li>
+                </ul>
+            </div>
+            
+            <h4>Specific Fungi:</h4>
+            <p>Same as Tinea Corporis: Trichophyton rubrum, Trichophyton mentagrophytes, Microsporum canis (zoonotic).</p>
+            
+            <div class="unique-box">
+                <h4>Unique Identifiers:</h4>
+                <p>Often misdiagnosed as other facial dermatoses (seborrheic dermatitis, perioral dermatitis, contact dermatitis, rosacea, lupus erythematosus, acne vulgaris, annular psoriasis). Tinea Incognito occurs when prior topical corticosteroid use masks typical features. Lack of classic "ringworm" appearance makes diagnosis challenging. Consider when presumed facial dermatoses don't respond to appropriate treatments.</p>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- Tinea Barbae -->
+            <div class="disease-card dermato-card" onclick="toggleCard(this)">
+                <h3>Tinea Barbae (Beard Ringworm) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Inflammatory):</strong> Deep, inflammatory, follicular pustules, nodules, plaques in beard area. May have kerion-like boggy plaques, abscesses, sinus tracts, bacterial superinfection, scarring alopecia, constitutional symptoms (malaise, lymphadenopathy). Zoophilic organisms more likely to cause inflammatory type.</li>
+                            <li><strong>Appearance (Superficial):</strong> Less inflammatory, tinea corporis-like plaques with scale, central alopecia (reversible). Anthropophilic organisms more likely to cause superficial type.</li>
+                            <li><strong>Distribution:</strong> Bearded areas of face and neck.</li>
+                            <li><strong>Risk Factors:</strong> Exposure to animals (zoophilic), barbershop exposure (less common now), compromised skin barrier.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Hyphae and arthroconidia in hair shafts and follicles on KOH prep.</li>
+                                <li><strong>Special Stains:</strong> Chlorazol black stain enhances hyphae. PAS stain on biopsy (kerion).</li>
+                                <li><strong>Culture:</strong> Sabouraud dextrose agar, dermatophyte test medium (DTM). Culture is important to identify organism and guide treatment, especially in inflammatory type.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Oral - required, especially for inflammatory type):</strong> Terbinafine, Itraconazole, Fluconazole. Griseofulvin may be used but less effective, especially for zoophilic infections.</li>
+                                <li><strong>Topical Adjuncts:</strong> Topical antifungals not sufficient as monotherapy. Warm compresses for kerion.</li>
+                                <li><strong>Dosing & Duration:</strong> Oral Terbinafine 2-4 weeks, Itraconazole 2-4 weeks, Fluconazole 3-4 weeks. Duration longer for kerion and deep infections, may be months.</li>
+                                <li><strong>Treatment Modifications:</strong> For kerion, consider oral steroids to reduce inflammation and scarring. Bacterial superinfection - treat with antibiotics. Shaving may be discouraged initially in inflammatory type.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Trichophyton verrucosum, Trichophyton mentagrophytes (zoophilic, inflammatory). Trichophyton rubrum (anthropophilic, superficial). Microsporum canis (less common).</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Beard area, inflammatory pustules/nodules/plaques (especially zoophilic), kerion, oral treatment required, differentiate from bacterial folliculitis, rule out sinus tract/dental origin.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tinea Unguium -->
+            <div class="disease-card dermato-card" onclick="toggleCard(this)">
+                <h3>Tinea Unguium (Onychomycosis) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Distal/Lateral Subungual - DLSO, most common):</strong> Onycholysis, subungual hyperkeratosis, yellowing/thickening, nail plate crumbling, starts distally and laterally.</li>
+                            <li><strong>Appearance (Superficial White - SWO):</strong> White, chalky patches on dorsal nail plate surface.</li>
+                            <li><strong>Appearance (Proximal Subungual - PSO):</strong> Proximal nail plate involvement, often with paronychia, often in immunocompromised.</li>
+                            <li><strong>Appearance (Total Dystrophic - TDO):</strong> Entire nail plate thickened, dystrophic, crumbling, end-stage of other patterns.</li>
+                            <li><strong>Distribution:</strong> Toenails (more common), fingernails. Often multiple nails involved.</li>
+                            <li><strong>Risk Factors:</strong> Age, trauma, tinea pedis, reduced peripheral circulation, diabetes, hyperhidrosis, onychogryphosis, genetic predisposition (Down syndrome).</li>
+                            <li><strong>Indicators of Severe Onychomycosis & Poor Treatment Response:</strong>
+                                <ul>
+                                    <li><strong>Nail Factors:</strong> Subungual hyperkeratosis >2 mm, significant lateral involvement, >50% nail bed involvement.Slow nail growth, total dystrophic onychomycosis, and matrix involvement predict poor response</li>
+                                    <li><strong>Dermatophytoma:</strong> Streak/patch of densely packed hyphae – removal may improve antifungal efficacy.</li>
+                                    <li><strong>Patient Factors:</strong> Immunosuppression, peripheral arterial disease, and poorly controlled diabetes increase severity and recurrence risk.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Hyaline, septate hyphae and arthroconidia in nail clippings/subungual debris on KOH prep. Relatively low sensitivity.</li>
+                                <li><strong>Special Stains:</strong> PAS stain on nail clipping histology - gold standard for diagnosis, high sensitivity.</li>
+                                <li><strong>Culture:</strong> Sabouraud dextrose agar, dermatophyte test medium (DTM). Lower sensitivity than PAS, but identifies organism.</li>
+                                <li><strong>Nail Biopsy:</strong> For histology and PAS, consider if diagnosis unclear or to rule out other nail pathology.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Topical - for mild DLSO, SWO, limited nail involvement):</strong> Ciclopirox 8% solution, Tavaborole 5% solution, Efinaconazole 10% solution. Limited efficacy for most onychomycosis.</li>
+                                <li><strong>Drug Selection (Oral - for moderate to severe DLSO, PSO, TDO, multiple nail involvement, failed topical):</strong> Terbinafine (gold standard, best efficacy for dermatophytes), Itraconazole (pulse or continuous), Fluconazole (less effective than terbinafine/itraconazole for dermatophytes). Oral Griseofulvin is not effective.</li>
+                                <li><strong>Dosing & Duration (Oral):</strong> Terbinafine 12 weeks toenails, 6 weeks fingernails. Itraconazole continuous 12 weeks toenails, 6 weeks fingernails, or pulse dosing. Fluconazole continuous until clear (longer duration).</li>
+                                <li><strong>Treatment Modifications:</strong> Debridement of hyperkeratotic nail may improve topical penetration. Consider combination therapy (oral + topical) for severe cases or poor responders. Monitor LFTs with oral antifungals. Counsel on long treatment duration and recurrence risk.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p><strong>Trichophyton rubrum</strong> (most common), <strong>Trichophyton interdigitale</strong>, <strong>Epidermophyton floccosum</strong>. Non-dermatophyte molds (<strong>Fusarium</strong>, <strong>Scopulariopsis</strong>) and <strong>Candida</strong> can also cause onychomycosis, but less common in healthy individuals.<strong>Fusarium spp.</strong>: Causes superficial white onychomycosis but is of particular concern in immunocompromised patients due to its ability to cause disseminated fusariosis. It is highly resistant to antifungals, often requiring amphotericin B or voriconazole.
+                            <strong>Scytalidium spp.</strong>: Associated with dark onychomycosis and often linked to chronic paronychia. It is resistant to azoles and terbinafine, making treatment challenging.
+                            <strong>Scopulariopsis brevicaulis</strong>: Causes white superficial onychomycosis with lateral yellow-brown discoloration. KOH prep reveals lemon-shaped conidia and atypical hyphae.<strong>Candida spp.</strong>: Common in chronic mucocutaneous candidiasis, frequently affecting fingernails, leading to ridging, yellow discoloration, and onycholysis. More common in children under 3 years and patients with chronic paronychia.</p>
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Nail involvement (toenails > fingernails), various clinical patterns (DLSO, SWO, PSO, TDO), KOH/PAS/culture for diagnosis, oral treatment often required, long treatment duration, recurrence common.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- III. MALASSEZIA FOLLICULITIS -->
+        <div id="malassezia-section" class="section malassezia-section">
+            <div class="mnemonic-box">
+                <div class="mnemonic-title">MALASSEZIA FOLLICULITIS MNEMONIC: "YEAST" - "Young Eruptive Acne-like Sebaceous Triggered"</div>
+                <p><strong>Y</strong>oung adults, common demographic<br>
+                <strong>E</strong>ruption of monomorphic papules and pustules<br>
+                <strong>A</strong>cne-like but no comedones, pruritic<br>
+                <strong>S</strong>ebum-rich areas: upper trunk, arms, neck<br>
+                <strong>T</strong>reatment includes antifungals (oral/topical)</p>
+            </div>
+            
+            <!-- Malassezia Folliculitis -->
+            <div class="disease-card malassezia-card" onclick="toggleCard(this)">
+                <h3>Malassezia (Pityrosporum) Folliculitis <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance:</strong> Pruritic, monomorphic, follicular papules and pustules. No comedones.</li>
+                            <li><strong>Distribution:</strong> Upper trunk, arms, neck, face (forehead, hairline). Sebum-rich areas.</li>
+                            <li><strong>Risk Factors:</strong> Young adults, warm/humid climate, hyperhidrosis, oily skin, immunosuppression, chronic antibiotic use, topical oil application, occlusion.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Yeast forms only (no hyphae) in follicular contents or skin scraping KOH prep.</li>
+                                <li><strong>Special Stains:</strong> PAS stain highlights yeast in hair follicle.</li>
+                                <li><strong>Culture:</strong> Requires lipid-enriched media (e.g., Sabouraud dextrose agar with olive oil overlay). Culture generally not needed for diagnosis.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Topical):</strong> Selenium sulfide shampoo (body wash), ketoconazole shampoo (body wash), ciclopirox shampoo (body wash), zinc pyrithione shampoo (body wash). Topical azole creams (ketoconazole, clotrimazole), ciclopirox cream/gel/lotion. Benzoyl peroxide wash may also be helpful (reduces follicular occlusion).</li>
+                                <li><strong>Drug Selection (Oral - for extensive, recalcitrant, or severe cases):</strong> Itraconazole, Fluconazole.</li>
+                                <li><strong>Dosing & Duration:</strong> Topical washes daily or several times weekly for 2-4 weeks. Topical creams twice daily for 2-4 weeks. Oral Itraconazole or Fluconazole short courses (e.g., 200mg daily x 1-2 weeks).</li>
+                                <li><strong>Treatment Modifications:</strong> Address underlying risk factors (reduce occlusion, switch antibiotics if possible, avoid oily products).</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Malassezia furfur, Malassezia globosa.</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Pruritic follicular papules/pustules without comedones, upper trunk/face, yeast forms only on KOH, responds to antifungals. Differentiate from bacterial folliculitis and acne vulgaris.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- IV. SUBCUTANEOUS MYCOSES -->
+        <div id="subcutaneous-section" class="section subcutaneous-section">
+            <div class="mnemonic-box">
+                <div class="mnemonic-title">SUBCUTANEOUS MYCOSES MNEMONIC: "SCMLBPP" - "Some Cutaneous Mycoses Linger Below Patient's Perception"</div>
+                <p><strong>S</strong>porotrichosis - Rose gardener's disease, lymphocutaneous spread,sphagnum moss,cigar shaped,asteroid bodies, Dimorphic fungus <br>
+                <strong>C</strong>hromoblastomycosis - Verrucous plaques, sclerotic bodies, fonsecaea pedrosoi<br>
+                <strong>M</strong>ycetoma - Triad: swelling, sinuses, grains. <span style="color: #808080; text-shadow: 1px 1px 2px #CCCCCC;">Madurella grisea Dark Grain</span>, <span style="color: #FF0066; text-shadow: 1px 1px 2px #CCCCCC;">Actinomadura pelletieri Red Granules</span>  <br>
+                <strong>L</strong>obomycosis - Keloid-like nodules, "brass knuckles", ToC Surgical Excision<br>
+                <strong>B</strong>asidiobolomycosis - Painless swelling, Splendore-Hoeppli<br>
+                <strong>P</strong>rotothecosis - Algae, not fungus, surgical excision, appearing as the pathognomonic "morula" form <br>
+                <strong>P</strong>ythiosis - Oomycete, kunkers, water exposure</p>
+            </div>
+            
+            <!-- Sporotrichosis -->
+            <div class="disease-card subcutaneous-card" onclick="toggleCard(this)">
+                <h3>Sporotrichosis (Rose Gardener's Disease) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Lymphocutaneous - Sporotrichoid, most common):</strong> Initial papule/nodule at inoculation site (often hand/arm), becomes ulcerated. Secondary nodules/ulcers along lymphatic drainage pathway proximally. "Ascending lymphangitis with nodules".</li>
+                            <li><strong>Appearance (Fixed Cutaneous):</strong> Localized verrucous plaque or ulcer at inoculation site, no lymphatic spread. Often face (especially children).</li>
+                            <li><strong>Appearance (Disseminated):</strong> Subcutaneous nodules, systemic involvement possible (lungs, bones, joints, CNS - rare). Immunocompromised hosts at higher risk.</li>
+                            <li><strong>Distribution:</strong> Extremities (lymphocutaneous), face (fixed cutaneous), widespread (disseminated).</li>
+                            <li><strong>Risk Factors:</strong> Gardening, landscaping, forestry, contact with sphagnum moss, rose thorns, cats (especially S. brasiliensis). Endemic areas (Americas, Africa).</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Organisms sparse and difficult to see on routine stains (H&E, KOH). Cigar-shaped yeast forms. Asteroid bodies (radiating eosinophilic material around yeast) may be seen but not specific.</li>
+                                <li><strong>Special Stains:</strong> PAS and GMS enhance yeast. Direct fluorescent antibody (DFA) staining increases sensitivity.</li>
+                                <li><strong>Culture:</strong> Gold standard for diagnosis. Dimorphic fungus. Mold form at 25°C (white to brown wrinkled colony), yeast form at 37°C (pasty, cream-colored).</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Oral - Lymphocutaneous, Fixed Cutaneous):</strong> Itraconazole (first-line), Saturated Solution of Potassium Iodide (SSKI - older, less preferred due to side effects).</li>
+                                <li><strong>Drug Selection (IV - Disseminated, Severe):</strong> Amphotericin B (deoxycholate or lipid formulation), followed by oral Itraconazole. Voriconazole, Posaconazole, Isavuconazole are alternatives.</li>
+                                <li><strong>Dosing & Duration (Oral):</strong> Itraconazole 100-200mg daily for 3-6 months, or until resolution and consolidation. SSKI titrated up to tolerance, continued for several weeks post-resolution.</li>
+                                <li><strong>Dosing & Duration (IV):</strong> Amphotericin B until clinical improvement, then step-down to oral azole.</li>
+                                <li><strong>Treatment Modifications:</strong> Localized cutaneous lesions - may consider local heat therapy in addition to antifungals. Disseminated disease - prolonged therapy, consider underlying immunosuppression.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Sporothrix schenckii, Sporothrix brasiliensis, Sporothrix globosa, Sporothrix mexicana. S. brasiliensis - cat-associated, more virulent.</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Lymphocutaneous spread, "rose gardener's disease", cigar-shaped yeasts, asteroid bodies, dimorphic fungus, culture for definitive diagnosis, Itraconazole treatment. Differentiate from atypical mycobacterial infection (especially M. marinum).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chromoblastomycosis -->
+            <div class="disease-card subcutaneous-card" onclick="toggleCard(this)">
+                <h3>Chromoblastomycosis (Verrucous Dermatitis) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance:</strong> Verrucous plaques, nodules, papules, often with cauliflower-like appearance. May have pigmented dots (reddish-brown to black). Chronic, slowly progressive.</li>
+                            <li><strong>Distribution:</strong> Lower extremities (most common - foot, leg), exposed areas prone to trauma. Unilateral usually.</li>
+                            <li><strong>Risk Factors:</strong> Tropical/subtropical climates, outdoor occupations (farmers, laborers), trauma, lack of footwear.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Sclerotic bodies (Medlar bodies, copper pennies) - pathognomonic, thick-walled, pigmented cells, seen in tissue (dermis, giant cells).</li>
+                                <li><strong>Special Stains:</strong> Fontana-Masson staining for melanin helps confirm the presence of the sclerotic bodies.</li>
+                                <li><strong>Culture:</strong> Slow-growing, dematiaceous (pigmented) colonies. Fonsecaea pedrosoi (most common), Cladophialophora carrionii .</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Limited Efficacy):</strong> Itraconazole (most common oral agent), Terbinafine (some efficacy), Voriconazole, Posaconazole, Fluconazole (less effective). 5-Flucytosine + Azole or Amphotericin B combinations sometimes used for severe cases.</li>
+                                <li><strong>Non-Pharmacologic:</strong> Surgical excision (for small, early lesions) plus systemic antifungals. Cryotherapy, heat therapy (hyperthermia) adjuncts.</li>
+                                <li><strong>Dosing & Duration:</strong> Itraconazole long-term (at least 6 months, often > 12 months). Duration depends on clinical response, often prolonged.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Fonsecaea pedrosoi, Cladophialophora carrionii, Fonsecaea compacta, Phialophora verrucosa, Rhinocladiella aquaspersa.</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Verrucous plaques, pigmented dots, sclerotic bodies (Medlar bodies) on histology, tropical regions, chronic course, surgical excision often needed, limited antifungal efficacy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mycetoma -->
+            <div class="disease-card subcutaneous-card" onclick="toggleCard(this)">
+                <h3>Mycetoma (Madura Foot/Maduromycosis) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance:</strong> Triad: painless subcutaneous swelling, draining sinuses, grains (sulfur granules, sclerotia). Nodules, plaques, chronic, progressive. Can extend to muscle and bone.</li>
+                            <li><strong>Distribution:</strong> Foot (most common - Madura foot), hand, trunk, scalp. Unilateral usually.</li>
+                            <li><strong>Risk Factors:</strong> Tropical/subtropical climates, rural areas, outdoor occupations, trauma, walking barefoot.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy (Grains):</strong> Examination of grains from draining sinuses. Eumycotic (fungal) mycetoma: broad hyphae. Actinomycotic mycetoma: thin, filamentous bacteria.</li>
+                                <li><strong>Special Stains (Grains):</strong> Gram stain, Methenamine silver, Brown-Brenn stain to differentiate eumycotic vs. actinomycotic.</li>
+                                <li><strong>Culture:</strong> Culture of grains to identify causative organism (fungal and bacterial cultures).</li>
+                                <li><strong>Imaging:</strong> Radiographs, MRI to assess bone and deep tissue involvement.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Treatment (Eumycotic Mycetoma - Fungal):</strong> Azoles (Itraconazole, Voriconazole, Posaconazole), Terbinafine (less effective). Surgical excision plus antifungals.</li>
+                                <li><strong>Treatment (Actinomycotic Mycetoma - Bacterial):</strong> Prolonged antibiotics - Streptomycin/Amikacin + Trimethoprim-Sulfamethoxazole or Dapsone. Moxifloxacin, Imipenem alternatives.</li>
+                                <li><strong>Dosing & Duration:</strong> Prolonged therapy for both types - months to years. Duration depends on clinical response and organism.</li>
+                                <li><strong>Treatment Modifications:</strong> Surgical debridement, amputation in severe cases.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi (Eumycotic):</h4>
+                        <p>⚫ Black Granules: <span style="color: #000000; text-shadow: 0 0 3px grey, 0 0 5px grey, 0 0 7px grey;">Madurella mycetomatis</span> (Fungus), <span style="color: #000000; text-shadow: 0 0 3px grey, 0 0 5px grey, 0 0 7px grey;">Madurella grisea</span> (Fungus), <span style="color: #000000; text-shadow: 0 0 3px grey, 0 0 5px grey, 0 0 7px grey;">Leptosphaeria senegalensis</span> (Fungus)<br>
+⚪ White Granules: <span style="color: #FFFFFF; text-shadow: 0 0 3px black, 0 0 5px black, 0 0 7px black;">Pseudallescheria boydii / Scedosporium apiospermum</span> (Fungus), <span style="color: #FFFFFF; text-shadow: 0 0 3px black, 0 0 5px black, 0 0 7px black;">Acremonium and Sarocladium spp.</span> (Fungus), <span style="color: #FFFFFF; text-shadow: 0 0 3px black, 0 0 5px black, 0 0 7px black;">Nocardia brasiliensis</span> (Bacteria), <span style="color: #FFFFFF; text-shadow: 0 0 3px black, 0 0 5px black, 0 0 7px black;">Nocardia asteroides</span> (Bacteria)<br>
+🟡 Yellow-White Granules: <span style="color: #FFFF00; text-shadow: 0 0 3px black, 0 0 5px black, 0 0 7px black;">Nocardia caviae</span> (Bacteria), <span style="color: #FFFF00; text-shadow: 0 0 3px black, 0 0 5px black, 0 0 7px black;">Actinomyces israelii</span> (Bacteria)<br>
+🩷 Pink or White Granules: <span style="color: #FF69B4; text-shadow: 0 0 3px black, 0 0 5px black, 0 0 7px black;">Actinomadura madurae</span> (Bacteria)<br>
+🔴 Red Granules: <span style="color: #ff00009d; text-shadow: 0 0 3px grey, 0 0 5px grey, 0 0 7px grey;">Actinomadura pelletieri</span> (Bacteria)<br>
+🟤 Brown or Yellow Granules: <span style="color: #FF9900; text-shadow: 0 0 3px black, 0 0 5px black, 0 0 7px black, 0 0 10px #FF9900;">Streptomyces somaliensis</span> (Bacteria)</p>
+                        
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Triad of swelling, draining sinuses, grains, Madura foot, eumycotic vs. actinomycotic types, prolonged treatment, surgical management often needed. Differentiate from botryomycosis (bacterial infection with grains).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Lobomycosis -->
+<div class="disease-card subcutaneous-card" onclick="toggleCard(this)">
+    <h3>Lobomycosis (Keloidal Blastomycosis/Lobo's Disease) <span class="frequency-badge"></span></h3>
+    <div class="expand-icon">+</div>
+    <div class="card-content">
+        <div class="key-points">
+            <h4>Clinical Presentation:</h4>
+            <ul>
+                <li><strong>Appearance:</strong> Firm, keloid-like nodules, plaques, often multiple and coalescing. Smooth surface or verrucous, may ulcerate. Pruritic or asymptomatic. No lymphatic spread, no systemic involvement.</li>
+                <li><strong>Distribution:</strong> Distal extremities, ears (helix), face, trunk. Exposed areas more common.</li>
+                <li><strong>Risk Factors:</strong> Endemic areas (Amazon basin, South America), exposure to dolphins, marine environments, soil/vegetation, rural populations, men > women, trauma (minor).</li>
+            </ul>
+            
+            <div class="diagnosis-box">
+                <h4>Morphology & Diagnostics:</h4>
+                <ul>
+                    <li><strong>Microscopy:</strong> Thick-walled, yeast-like cells in chains ("brass knuckles") with intercellular bridges in dermis. Highly characteristic. Organisms numerous.</li>
+                    <li><strong>Special Stains:</strong> PAS and silver stains highlight organisms in tissue scrapings or biopsy.</li>
+                    <li><strong>Culture:</strong> Organism cannot be cultured in vitro - key diagnostic feature. Diagnosis based on clinical and microscopic findings.</li>
+                </ul>
+            </div>
+            
+            <div class="treatment-box">
+                <h4>Treatment Specifics:</h4>
+                <ul>
+                    <li><strong>Drug Selection (Limited Efficacy):</strong> Antifungal medications generally ineffective. Oral antifungals (Azoles, Amphotericin B) have shown minimal to no benefit. Posaconazole or Clofazimine + Itraconazole combination reported with some benefit in limited cases, but not well-established.</li>
+                    <li><strong>Non-Pharmacologic:</strong> Surgical excision or cryosurgery - treatment of choice for localized disease. Often difficult to completely excise due to extent and recurrence common even after excision.</li>
+                    <li><strong>Dosing & Duration:</strong> Surgical excision as complete as possible. Medical therapy – limited efficacy, prolonged courses of azoles may be attempted but evidence is weak.</li>
+                </ul>
+            </div>
+            
+            <h4>Specific Fungi:</h4>
+            <p>Lacazia loboi (uncultivable fungus).</p>
+            
+            <div class="unique-box">
+                <h4>Unique Identifiers:</h4>
+                <p>Keloid-like nodules/plaques, chains of thick-walled yeasts ("brass knuckles") on microscopy, uncultivable organism, Amazon basin/dolphin association, surgical excision primary treatment, antifungal resistance. Differentiate from keloids, dermatofibroma, other subcutaneous nodules, chromoblastomycosis (sclerotic bodies).</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Basidiobolomycosis -->
+<div class="disease-card subcutaneous-card" onclick="toggleCard(this)">
+    <h3>Basidiobolomycosis <span class="frequency-badge"></span></h3>
+    <div class="expand-icon">+</div>
+    <div class="card-content">
+        <div class="key-points">
+            <h4>Clinical Presentation:</h4>
+            <ul>
+                <li><strong>Appearance:</strong> Solitary, painless, indurated subcutaneous nodule or swelling. Rubbery consistency. No epidermal change initially. Slowly enlarges, can become extensive. No ulceration, no draining sinuses, no grains.</li>
+                <li><strong>Distribution:</strong> Thigh, buttock . Can also occur in trunk, extremities. Usually single lesion.</li>
+                <li><strong>Risk Factors:</strong> Children (most common in children living in tropical/subtropical climates). Arthropod bites, minor trauma may be portal of entry. Environmental exposure - saprophytic fungus in soil, decaying vegetation, insectivorous bats.</li>
+            </ul>
+            
+            <div class="diagnosis-box">
+                <h4>Morphology & Diagnostics:</h4>
+                <ul>
+                    <li><strong>Microscopy:</strong> Broad, sparsely septate hyphae surrounded by eosinophilic material and Splendore-Hoeppli phenomenon (eosinophilic radiating material around fungi) in subcutaneous tissue. Hyphae often folded and contorted.</li>
+                    <li><strong>Special Stains:</strong> H&E, PAS, Methenamine silver highlight hyphae and eosinophilic cuff.</li>
+                    <li><strong>Culture:</strong> Mold form colonies on Sabouraud dextrose agar. Basidiobolus ranarum. Rapid growth.</li>
+                </ul>
+            </div>
+            
+            <div class="treatment-box">
+                <h4>Treatment Specifics:</h4>
+                <ul>
+                    <li><strong>Drug Selection (First-line):</strong> Saturated Solution of Potassium Iodide (SSKI) (classic treatment, often effective).</li>
+                    <li><strong>Drug Selection (Alternative/SSKI Failure):</strong> Oral Azoles (Itraconazole, Ketoconazole - older literature), Voriconazole (case reports). Trimethoprim-Sulfamethoxazole (TMP-SMX) - also reported effective. Amphotericin B (less effective, reserved for severe/refractory cases).</li>
+                    <li><strong>Non-Pharmacologic:</strong> Surgical excision generally not recommended due to frequent recurrence and localized nature of infection, medical therapy preferred.</li>
+                    <li><strong>Dosing & Duration:</strong> SSKI titrated up to tolerated dose, continued for several weeks post-resolution. Oral antifungals and TMP-SMX duration - weeks to months, depending on clinical response.</li>
+                </ul>
+            </div>
+            
+            <h4>Specific Fungi:</h4>
+            <p>Basidiobolus ranarum.</p>
+            
+            <div class="unique-box">
+                <h4>Unique Identifiers:</h4>
+                <p>Painless subcutaneous swelling, broad non-septate hyphae with eosinophilic cuff (Splendore-Hoeppli), SSKI treatment of choice, children, tropical climates, bat/arthropod exposure. Differentiate from other subcutaneous nodules, mycetoma (grains/sinuses), chromoblastomycosis (verrucous plaques), arthropod bite reactions.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Protothecosis -->
+<div class="disease-card subcutaneous-card" onclick="toggleCard(this)">
+    <h3>Protothecosis <span class="frequency-badge"></span></h3>
+    <div class="expand-icon">+</div>
+    <div class="card-content">
+        <div class="key-points">
+            <h4>Clinical Presentation:</h4>
+            <ul>
+                <li><strong>Appearance (Cutaneous - most common form):</strong> Solitary cutaneous plaques, nodules, ulcers. May be eczematous, verrucous, or draining. Extremities, olecranon bursitis location.</li>
+                <li><strong>Appearance (Disseminated - Immunocompromised):</strong> Widespread skin lesions, systemic involvement (algemia reported in immunocompromised hosts, rare).</li>
+                <li><strong>Distribution:</strong> Skin (extremities - trauma site), olecranon bursa (bursitis), widespread in disseminated form.</li>
+                <li><strong>Risk Factors:</strong> Trauma/inoculation (contaminated water/soil). Immunocompromise - increases risk of dissemination, but even immunocompetent hosts can get localized cutaneous disease. Exposure to Prototheca algae in environment (sewage, water).</li>
+            </ul>
+            
+            <div class="diagnosis-box">
+                <h4>Morphology & Diagnostics:</h4>
+                <ul>
+                    <li><strong>Microscopy:</strong> Spherules (sporangia) containing endospores (morulae stage). <strong>Algae - not fungi</strong>, achlorophyllic (lacking chlorophyll).</li>
+                    <li><strong>Culture:</strong> Bacterial-like colonies on fungal media (Sabouraud dextrose agar). Rapid growth. Prototheca wickerhamii most common species. Requires absence of cycloheximide in media to grow (inhibits some fungi but also Prototheca).</li>
+                </ul>
+            </div>
+            
+            <div class="treatment-box">
+                <h4>Treatment Specifics:</h4>
+                <ul>
+                    <li><strong>Drug Selection (Limited efficacy):</strong> Antifungal agents generally less effective. Amphotericin B (lipid formulation - some efficacy). Azoles (Itraconazole, Ketoconazole, Fluconazole - limited efficacy). Terbinafine - reported efficacy in some cases.</li>
+                    <li><strong>Non-Pharmacologic:</strong> Surgical excision often treatment of choice for localized cutaneous disease. Olecranon bursitis - drainage, bursectomy.</li>
+                    <li><strong>Dosing & Duration:</strong> Systemic antifungals - prolonged courses may be attempted for disseminated or extensive/refractory localized disease, but evidence limited and variable efficacy.</li>
+                </ul>
+            </div>
+            
+            <h4>Causative Organism:</h4>
+            <p>Prototheca spp. (Prototheca wickerhamii most common), <strong>Algae - not a true fungus</strong>.</p>
+            
+            <div class="unique-box">
+                <h4>Unique Identifiers:</h4>
+                <p>Achlorophyllic algae (not fungus), spherules with endospores, gram-negative, surgical excision often preferred, antifungal resistance, trauma/water exposure, not inhibited by cycloheximide on culture. Differentiate from fungal mycoses, bacterial infections, other granulomatous conditions.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pythiosis -->
+<div class="disease-card subcutaneous-card" onclick="toggleCard(this)">
+    <h3>Pythiosis <span class="frequency-badge"></span></h3>
+    <div class="expand-icon">+</div>
+    <div class="card-content">
+        <div class="key-points">
+            <h4>Clinical Presentation:</h4>
+            <ul>
+                <li><strong>Appearance (Cutaneous - most common in humans):</strong> Progressive necrotic plaques, ulcers, nodules. Often starts as pruritic papule. Chronic, painful. May have kunkers (yellow-white coral-like masses in tissue). Pythiosis typically of limbs or periocular area.</li>
+                <li><strong>Distribution:</strong> Limbs (lower extremities most common, periocular region), subcutaneous tissue, blood vessels (vascular pythiosis).</li>
+                <li><strong>Risk Factors:</strong> Exposure to stagnant water (ponds, swamps), rural areas, trauma/abrasions. <strong>Aquatic oomycete - not a true fungus</strong>. Immunocompromised/thalassemia patients may be at increased risk, but can occur in healthy individuals. Thailand, India most common regions in text, reported worldwide including Southern US.</li>
+            </ul>
+            
+            <div class="diagnosis-box">
+                <h4>Morphology & Diagnostics:</h4>
+                <ul>
+                    <li><strong>Microscopy:</strong> Broad, sparsely septate hyphae-like structures (more irregular and wider than fungi) with eosinophilic staining in tissue (biopsy). Angioinvasion. No septa consistently.</li>
+                    <li><strong>Special Stains:</strong> H&E, GMS, silver stains, but organisms can be difficult to visualize with standard fungal stains. Immunohistochemical stains more helpful.</li>
+                    <li><strong>Culture:</strong> Grows on fungal and bacterial media (distinguishes from true fungi which are inhibited on bacterial media). Pythium insidiosum - aquatic oomycete. Requires absence of cycloheximide and antibiotics in media to grow well.</li>
+                    <li><strong>Serology:</strong> ELISA serology available and useful for diagnosis.</li>
+                </ul>
+            </div>
+            
+            <div class="treatment-box">
+                <h4>Treatment Specifics:</h4>
+                <ul>
+                    <li><strong>Drug Selection (Antifungals ineffective):</strong> Antifungal agents generally ineffective against Pythium (oomycete, not fungus). Amphotericin B, Azoles, Terbinafine, Echinocandins have no activity.</li>
+                    <li><strong>Drug Selection (Treatment is Challenging):</strong> Aggressive surgical excision (limb amputation often recommended in severe cases), Wide local excision for localized lesions. Immunotherapy - Investigational immunotherapy with Pythium-specific immunotherapy shown some promise, but not widely available. Antibacterial agents - sometimes used for secondary bacterial infections, not for primary pythiosis).</li>
+                    <li><strong>Dosing & Duration:</strong> Surgical excision – aggressive and wide margins. Immunotherapy - investigational, protocols vary. Medical therapy with antifungals - not recommended/ineffective.</li>
+                </ul>
+            </div>
+            
+            <h4>Causative Organism:</h4>
+            <p>Pythium insidiosum (<strong>aquatic oomycete, not a true fungus</strong>).</p>
+            
+            <div class="unique-box">
+                <h4>Unique Identifiers:</h4>
+                <p>Aquatic oomycete (not fungus), broad non-septate hyphae-like structures, angioinvasion, kunkers, stagnant water exposure, surgical excision (often amputation in severe cases), antifungals ineffective, serology helpful for diagnosis. Differentiate from fungal mycetoma, mucormycosis, bacterial infections (necrotizing fasciitis).</p>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+        
+        <!-- V. SYSTEMIC MYCOSES -->
+        <div id="systemic-section" class="section systemic-section">
+            <div class="mnemonic-box">
+                <div class="mnemonic-title">SYSTEMIC MYCOSES MNEMONIC: "HABCAP" - "Highly Aggressive Bugs Cause Alarming Patterns"</div>
+                <p><strong>H</strong>istoplasma - Ohio Valley, small intracellular yeasts<br>
+                <strong>A</strong>spergillus - Septate hyphae with 45° branching<br>
+                <strong>B</strong>lastomyces - Great Lakes, broad-based budding yeasts<br>
+                <strong>C</strong>occidioides - Southwest, spherules with endospores<br>
+                <strong>A</strong>ll others - Cryptococcus, Mucor, Fusarium, etc.<br>
+                <strong>P</strong>neumocystis - HIV, foamy alveolar exudate</p>
+            </div>
+            
+            <!-- Histoplasmosis -->
+            <div class="disease-card systemic-card" onclick="toggleCard(this)">
+                <h3>Histoplasmosis (Darling's Disease/Ohio Valley Disease) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Cutaneous - Disseminated):</strong> Nonspecific. Papules, nodules, ulcers, erosions, purpura. Oral ulcers most common mucocutaneous finding.</li>
+                            <li><strong>Appearance (Pulmonary - Acute):</strong> Flu-like illness, fever, cough, chest pain. Often self-limited.</li>
+                            <li><strong>Appearance (Pulmonary - Chronic):</strong> Cavitary lesions, progressive pulmonary disease (similar to TB).</li>
+                            <li><strong>Appearance (Disseminated):</strong> Hepatosplenomegaly, lymphadenopathy, bone marrow involvement, pancytopenia, adrenal insufficiency, CNS involvement (meningitis).</li>
+                            <li><strong>Distribution:</strong> Endemic areas (Ohio/Mississippi River Valleys), lungs (primary), disseminated to reticuloendothelial system (liver, spleen, lymph nodes, bone marrow), skin (secondary).</li>
+                            <li><strong>Risk Factors:</strong> Endemic areas, exposure to bird/bat droppings (caves, old buildings), immunocompromise (HIV, TNF-alpha inhibitors).</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Small intracellular yeasts within macrophages and histiocytes.</li>
+                                <li><strong>Special Stains:</strong> Giemsa, Wright, PAS, Methenamine silver highlight yeasts in tissue (bone marrow, lymph node, skin biopsy).</li>
+                                <li><strong>Culture:</strong> Dimorphic fungus. Mold form at 25°C (tuberculate macroconidia), yeast form at 37°C. Blood, bone marrow, sputum, BAL cultures. Slow growth.</li>
+                                <li><strong>Antigen Detection:</strong> Histoplasma antigen detection in urine and serum - high sensitivity for disseminated disease.</li>
+                                <li><strong>Serology:</strong> Antibody detection (complement fixation, immunodiffusion) - useful for diagnosis and monitoring.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Mild-Moderate Pulmonary Histoplasmosis):</strong> Itraconazole (first-line).</li>
+                                <li><strong>Drug Selection (Severe Pulmonary/Disseminated Histoplasmosis):</strong> Amphotericin B (deoxycholate or lipid formulation) - initial treatment, followed by oral Itraconazole step-down therapy.</li>
+                                <li><strong>Drug Selection (CNS Histoplasmosis):</strong> Liposomal Amphotericin B preferred for CNS penetration, followed by high-dose Fluconazole.</li>
+                                <li><strong>Dosing & Duration:</strong> Itraconazole 6-12 weeks for pulmonary, longer for disseminated (at least 12 months). Amphotericin B until clinically stable.</li>
+                                <li><strong>Treatment Modifications:</strong> HIV-associated histoplasmosis - lifelong suppressive therapy with Itraconazole after induction.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Histoplasma capsulatum var. capsulatum, Histoplasma capsulatum var. duboisii (African histoplasmosis - bone and skin lesions).</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Endemic areas (Ohio/Mississippi River Valleys), intracellular yeasts in macrophages, Histoplasma antigen testing, Itraconazole and Amphotericin B treatment, bird/bat exposure. Differentiate from TB, sarcoidosis, other granulomatous diseases.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blastomycosis -->
+            <div class="disease-card systemic-card" onclick="toggleCard(this)">
+                <h3>Blastomycosis (North American Blastomycosis/Gilchrist's Disease) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Cutaneous - Disseminated):</strong> Verrucous plaques with raised, sharply demarcated, serpiginous borders, microabscesses at edge, central scarring. Papulopustules, nodules, ulcers.</li>
+                            <li><strong>Appearance (Pulmonary):</strong> Variable - asymptomatic to acute pneumonia to chronic progressive pulmonary disease.</li>
+                            <li><strong>Appearance (Disseminated):</strong> Skin (most common extrapulmonary site), bone (osteomyelitis), genitourinary tract (prostatitis, epididymo-orchitis), CNS (meningitis - less common than crypto/coccidio).</li>
+                            <li><strong>Distribution:</strong> Endemic areas (Mississippi/Ohio River Valleys, Great Lakes), lungs (primary), skin (secondary, often exposed areas), bone, GU tract.</li>
+                            <li><strong>Risk Factors:</strong> Endemic areas, outdoor activities, soil disruption, male sex, age >40, immunocompromise (less strong association than histo/coccidio/crypto).</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Large, thick-walled yeasts with broad-based budding in tissue (pus, sputum, skin biopsy).</li>
+                                <li><strong>Special Stains:</strong> PAS and Methenamine silver highlight yeast in tissue. KOH prep of pus may show characteristic yeasts.</li>
+                                <li><strong>Culture:</strong> Dimorphic fungus. Mold form at 25°C (white fluffy mycelium), yeast form at 37°C (wrinkled, waxy colony). Sputum, BAL, pus, tissue cultures. Slow growth.</li>
+                                <li><strong>Antigen Detection:</strong> Blastomyces antigen detection in urine and serum - useful for diagnosis and monitoring.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Mild-Moderate Pulmonary/Cutaneous Blastomycosis):</strong> Itraconazole (first-line).</li>
+                                <li><strong>Drug Selection (Severe Pulmonary/Disseminated Blastomycosis):</strong> Amphotericin B (deoxycholate or lipid formulation) - initial treatment, followed by oral Itraconazole step-down therapy.</li>
+                                <li><strong>Drug Selection (CNS Blastomycosis):</strong> Liposomal Amphotericin B preferred for CNS penetration, followed by high-dose Fluconazole or Itraconazole.</li>
+                                <li><strong>Dosing & Duration:</strong> Itraconazole 6 months or longer, depending on site and severity. Amphotericin B until clinical improvement, then step-down to oral azole.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Blastomyces dermatitidis, Blastomyces gilchristii, Blastomyces helicus, Blastomyces emzantsi, Blastomyces percursus.</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Endemic areas (Mississippi/Ohio River Valleys, Great Lakes), broad-based budding yeast, verrucous plaques with microabscesses, Blastomyces antigen testing, Itraconazole and Amphotericin B treatment. Differentiate from squamous cell carcinoma, pyoderma gangrenosum, other deep fungal infections.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Coccidioidomycosis -->
+            <div class="disease-card systemic-card" onclick="toggleCard(this)">
+                <h3>Coccidioidomycosis (Valley Fever/Desert Rheumatism/San Joaquin Valley Fever) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Cutaneous - Primary):</strong> Papules, pustules, plaques, nodules, abscesses, sinus tracts, favoring face.</li>
+                            <li><strong>Appearance (Cutaneous - Secondary/Disseminated):</strong> Various lesions, often nodules, plaques, ulcers. Less specific.</li>
+                            <li><strong>Appearance (Pulmonary - Primary):</strong> Flu-like illness, fever, cough, chest pain, fatigue, erythema nodosum/multiforme (hypersensitivity reactions - "desert rheumatism"). Often self-limited.</li>
+                            <li><strong>Appearance (Pulmonary - Chronic Progressive):</strong> Pulmonary nodules, cavities, chronic pneumonia.</li>
+                            <li><strong>Appearance (Disseminated):</strong> Skin, lungs, meninges (meningitis - most serious), bones, joints, lymph nodes.</li>
+                            <li><strong>Distribution:</strong> Endemic areas (Southwest US, California, Arizona, Mexico), lungs (primary), disseminated to skin, meninges, bones, joints.</li>
+                            <li><strong>Risk Factors:</strong> Endemic areas, exposure to dust storms, outdoor activities, immunocompromise (HIV, pregnancy, certain ethnicities - Filipinos, African Americans, Mexicans at higher risk for dissemination).</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Large spherules (20-60 μm, up to 80 μm) containing endospores in tissue (sputum, pus, skin biopsy).</li>
+                                <li><strong>Special Stains:</strong> H&E, PAS, Methenamine silver highlight spherules and endospores.</li>
+                                <li><strong>Culture:</strong> Dimorphic fungus. Mold form at 25°C (white-tan colony, highly infectious arthroconidia - biohazard), no yeast form. Sputum, BAL, pus, tissue cultures. Rapid growth.</li>
+                                <li><strong>Serology:</strong> Antibody detection (IgM - early infection, IgG - persistent infection, complement fixation) - most common diagnostic test. Titers correlate with disease severity.</li>
+                                <li><strong>Skin Test (Coccidioidin/Spherulin):</strong> Indicates prior exposure/immunity, not diagnostic of active disease.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Mild-Moderate Pulmonary Coccidioidomycosis):</strong> Fluconazole, Itraconazole.</li>
+                                <li><strong>Drug Selection (Severe Pulmonary/Disseminated Coccidioidomycosis):</strong> Amphotericin B (deoxycholate or lipid formulation) - initial treatment, followed by oral Azole (Fluconazole or Itraconazole) step-down therapy.</li>
+                                <li><strong>Drug Selection (Coccidioidal Meningitis):</strong> High-dose Fluconazole (drug of choice), Itraconazole or Voriconazole alternatives. Intrathecal Amphotericin B for refractory cases.</li>
+                                <li><strong>Dosing & Duration:</strong> Fluconazole/Itraconazole 3-6 months for pulmonary, longer for disseminated (at least 1 year, often lifelong for meningitis). Amphotericin B until clinical improvement, then step-down to oral azole.</li>
+                                <li><strong>Treatment Modifications:</strong> HIV-associated coccidioidomycosis - lifelong suppressive therapy with Fluconazole after induction.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Coccidioides immitis, Coccidioides posadasii.</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Endemic areas (Southwest US, California, Arizona), large spherules with endospores, erythema nodosum/multiforme ("desert rheumatism"), Coccidioides serology, Fluconazole for meningitis, biohazard in culture (arthroconidia). Differentiate from bacterial pneumonia, other causes of meningitis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Paracoccidioidomycosis -->
+            <div class="disease-card systemic-card" onclick="toggleCard(this)">
+                <h3>Paracoccidioidomycosis (South American Blastomycosis/Brazilian Blastomycosis) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Mucocutaneous - Disseminated):</strong> Painful, ulcerative or verrucous lesions on face and in nasal and oral mucosae (moriform stomatitis). Lymphatic spread with cervical lymphadenopathy. Granulomatous lesions.</li>
+                            <li><strong>Appearance (Pulmonary):</strong> Often subclinical, can progress to chronic pulmonary disease.</li>
+                            <li><strong>Appearance (Disseminated):</strong> Mucocutaneous, pulmonary, lymph nodes, adrenals, spleen, liver, bones. CNS involvement less common.</li>
+                            <li><strong>Distribution:</strong> Endemic to South/Central America (Brazil, Venezuela, Colombia), mucocutaneous, pulmonary, lymph nodes.</li>
+                            <li><strong>Risk Factors:</strong> Endemic areas, rural populations, males > females, adults.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Large, thick-walled yeasts with multiple narrow-based buds ("mariner's wheel," "Mickey Mouse ears") in tissue (biopsy, sputum).</li>
+                                <li><strong>Special Stains:</strong> H&E, PAS, Methenamine silver highlight yeasts.</li>
+                                <li><strong>Culture:</strong> Dimorphic fungus. Mold form at 25°C, yeast form at 37°C. Sputum, BAL, tissue cultures. Slow growth.</li>
+                                <li><strong>Serology:</strong> Antibody detection (immunodiffusion, ELISA) - useful for diagnosis and monitoring.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Mild-Moderate Paracoccidioidomycosis):</strong> Itraconazole (first-line).</li>
+                                <li><strong>Drug Selection (Severe Paracoccidioidomycosis):</strong> Amphotericin B (deoxycholate or lipid formulation) - initial treatment, followed by oral Itraconazole step-down therapy.</li>
+                                <li><strong>Drug Selection (Alternative Azoles):</strong> Voriconazole, Posaconazole, Fluconazole (less effective than itraconazole). Sulfonamides (older alternative, prolonged therapy).</li>
+                                <li><strong>Dosing & Duration:</strong> Itraconazole prolonged therapy (9-18 months, at least 6 months after clinical resolution). Amphotericin B until clinical improvement, then step-down to oral Itraconazole.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Paracoccidioides brasiliensis.</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Endemic to South America, mucocutaneous lesions (moriform stomatitis), cervical lymphadenopathy, "mariner's wheel" yeast, prolonged Itraconazole treatment. Differentiate from leishmaniasis, other granulomatous diseases.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Systemic Candidiasis -->
+            <div class="disease-card systemic-card" onclick="toggleCard(this)">
+                <h3>Systemic Candidiasis <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Cutaneous - Disseminated):</strong> Firm erythematous papules and nodules, often with pale center, may become hemorrhagic or necrotic. Ecthyma gangrenosum-like lesions.</li>
+                            <li><strong>Appearance (Mucocutaneous - Oral Thrush):</strong> Creamy white plaques on oral mucosa, tongue.</li>
+                            <li><strong>Appearance (Mucocutaneous - Vulvovaginal Candidiasis):</strong> Pruritus, erythema, white cottage cheese-like discharge.</li>
+                            <li><strong>Appearance (Esophageal Candidiasis):</strong> Dysphagia, odynophagia.</li>
+                            <li><strong>Appearance (Disseminated):</strong> Fever, sepsis, endocarditis, endophthalmitis, organ involvement (kidney, liver, spleen).</li>
+                            <li><strong>Distribution:</strong> Cutaneous (disseminated, catheter-related), Mucocutaneous (oral, vaginal, esophageal, intertriginous).</li>
+                            <li><strong>Risk Factors:</strong> Immunocompromise (neutropenia, steroids, diabetes, HIV), indwelling catheters, broad-spectrum antibiotics, TPN, surgery.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Budding yeast and pseudohyphae in tissue (skin, blood culture, biopsy).</li>
+                                <li><strong>Special Stains:</strong> Gram stain, PAS, Methenamine silver highlight yeast and pseudohyphae.</li>
+                                <li><strong>Culture:</strong> Yeast form colonies on Sabouraud dextrose agar. Blood cultures, tissue cultures, swabs from mucosal surfaces. Rapid growth.</li>
+                                <li><strong>Beta-D-Glucan Assay:</strong> Serum Beta-D-Glucan - sensitive but non-specific marker for invasive fungal infection, including Candidiasis (and Aspergillosis). Not specific for Candida.</li>
+                                <li><strong>Mannan Antigen/Anti-Mannan Antibody:</strong> Less sensitive and specific than Beta-D-Glucan.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Mild Mucocutaneous Candidiasis):</strong> Topical antifungals (Nystatin, Azoles - Clotrimazole, Miconazole, etc.). Oral Fluconazole for oropharyngeal, vulvovaginal candidiasis.</li>
+                                <li><strong>Drug Selection (Invasive Candidiasis - Non-Neutropenic Host):</strong> Echinocandins (Caspofungin, Micafungin, Anidulafungin) - preferred initial therapy. Fluconazole (step-down therapy if susceptible and stable patient).</li>
+                                <li><strong>Drug Selection (Invasive Candidiasis - Neutropenic Host):</strong> Echinocandins or Lipid Amphotericin B.</li>
+                                <li><strong>Drug Selection (Alternative IV Agents):</strong> Voriconazole, Isavuconazole, Amphotericin B (deoxycholate).</li>
+                                <li><strong>Dosing & Duration:</strong> Mucocutaneous - topical for 1-2 weeks, oral Fluconazole single dose (VVC) or 7-14 days (oral thrush, esophageal). Invasive - IV therapy until clinical stability and blood cultures negative, then step-down to oral Fluconazole, total duration at least 2 weeks after blood culture clearance.</li>
+                                <li><strong>Treatment Modifications:</strong> Remove central lines if possible. Consider antifungal prophylaxis in high-risk neutropenic patients.</li>
+                            </ul>
+                        </div>
+                        
+                        <h<h4>Specific Fungi:</h4>
+                        <p>Candida albicans (most common), Candida glabrata (increased resistance to fluconazole), Candida tropicalis, Candida auris (multidrug resistant).</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Opportunistic, budding yeast and pseudohyphae, germ tube positive (C. albicans), various mucocutaneous and disseminated presentations, risk factors immunocompromise/catheters/antibiotics, Echinocandins first-line for invasive disease. Differentiate from bacterial sepsis, other causes of fever in immunocompromised hosts.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Aspergillosis -->
+            <div class="disease-card systemic-card" onclick="toggleCard(this)">
+                <h3>Aspergillosis <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Cutaneous - Primary):</strong> Necrotic papulonodules, hemorrhagic bullae, ulcers at catheter sites, wounds.</li>
+                            <li><strong>Appearance (Cutaneous - Secondary/Disseminated):</strong> Necrotic papulonodules, subcutaneous nodules.</li>
+                            <li><strong>Appearance (Pulmonary - Invasive):</strong> Fever, cough, pleuritic chest pain, hemoptysis, halo sign (CT chest).</li>
+                            <li><strong>Appearance (Pulmonary - Chronic):</strong> Aspergilloma ("fungus ball" in pre-existing cavity), chronic necrotizing pulmonary aspergillosis (CNPA), allergic bronchopulmonary aspergillosis (ABPA).</li>
+                            <li><strong>Appearance (Disseminated):</strong> Lungs, CNS, skin, sinuses, heart, kidneys.</li>
+                            <li><strong>Distribution:</strong> Ubiquitous in environment (soil, air), pulmonary (primary - inhalation), cutaneous (primary - trauma, catheter; secondary - dissemination).</li>
+                            <li><strong>Risk Factors:</strong> Immunocompromise (neutropenia key risk, stem cell transplant, organ transplant, corticosteroids), chronic lung disease (COPD, CF), neutropenia, corticosteroids.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Septate hyphae with acute angle (45-degree) branching in tissue (biopsy - lung, skin, sinus).</li>
+                                <li><strong>Special Stains:</strong> GMS, PAS stain highlight hyphae.</li>
+                                <li><strong>Culture:</strong> Mold form colonies on Sabouraud dextrose agar (various Aspergillus species, A. fumigatus - blue-green colony, A. flavus - yellow-green colony). Sputum, BAL, tissue cultures. Rapid growth.</li>
+                                <li><strong>Galactomannan Assay:</strong> Serum and BAL Galactomannan - good sensitivity and specificity for invasive Aspergillosis (especially in neutropenia). False positives possible (piperacillin-tazobactam, etc.).</li>
+                                <li><strong>Beta-D-Glucan Assay:</strong> Elevated, but not specific for Aspergillosis (also in Candidiasis, Pneumocystis, etc.).</li>
+                                <li><strong>PCR:</strong> Aspergillus PCR on blood, BAL - increasingly used.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Invasive Aspergillosis - first-line):</strong> Voriconazole preferred. Isavuconazole is a good alternative.</li>
+                                <li><strong>Drug Selection (Invasive Aspergillosis - alternative/salvage):</strong> Lipid Amphotericin B, Echinocandins (Caspofungin, Micafungin, Anidulafungin). Posaconazole (salvage therapy).</li>
+                                <li><strong>Drug Selection (Chronic Pulmonary Aspergillosis):</strong> Voriconazole, Itraconazole, Posaconazole (oral azoles).</li>
+                                <li><strong>Dosing & Duration:</strong> Invasive - IV Voriconazole or Amphotericin B, step-down to oral Voriconazole after clinical improvement. Duration depends on site and severity, prolonged for invasive disease.</li>
+                                <li><strong>Treatment Modifications:</strong> Reduce immunosuppression if possible. Neutropenia - consider neutrophil recovery. Surgical resection of localized lesions (aspergilloma, sinus).</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Aspergillus fumigatus, Aspergillus flavus, Aspergillus terreus, Aspergillus niger, Aspergillus nidulans.</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Opportunistic, septate hyphae with 45-degree branching, Galactomannan assay, Voriconazole first-line, neutropenia/immunocompromise key risk, halo sign (pulmonary), necrotic skin lesions. Differentiate from mucormycosis, bacterial pneumonia, other invasive fungal infections.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mucormycosis -->
+            <div class="disease-card systemic-card" onclick="toggleCard(this)">
+                <h3>Mucormycosis (Zygomycosis) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Cutaneous - Primary):</strong> Necrotic cellulitis, plaques, ulcers, bullae, eschar. Rapidly progressive. Often at trauma site.</li>
+                            <li><strong>Appearance (Cutaneous - Secondary/Contiguous spread from sinuses):</strong> Facial edema (unilateral), black eschar on palate or nasal mucosa, periorbital cellulitis, proptosis, cranial nerve palsies (Rhino-orbital-cerebral mucormycosis - most common form).</li>
+                            <li><strong>Appearance (Pulmonary):</strong> Fever, cough, hemoptysis, pleuritic chest pain.</li>
+                            <li><strong>Appearance (Disseminated):</strong> Rhino-orbital-cerebral, pulmonary, cutaneous, gastrointestinal, disseminated.</li>
+                            <li><strong>Distribution:</strong> Ubiquitous in environment (soil, decaying matter), sinuses (rhino-orbital-cerebral), lungs, skin (trauma site).</li>
+                            <li><strong>Risk Factors:</strong> <span class="risk-badge">DM/DKA</span> Diabetes Mellitus (especially DKA) - classic risk factor, Neutropenia (less common than Aspergillosis, but still a risk), Immunosuppression (steroids, transplant), Iron overload (deferoxamine use), trauma/burns.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Broad, ribbon-like, non-septate hyphae with 90-degree branching in tissue (biopsy - sinus, skin, lung). Angioinvasion - prominent.</li>
+                                <li><strong>Special Stains:</strong> H&E, PAS, Methenamine silver highlight hyphae, but poor staining with H&E can be characteristic.</li>
+                                <li><strong>Culture:</strong> Rapidly growing, "lid-lifter" colonies on Sabouraud dextrose agar, fluffy white-gray colonies. Tissue biopsy culture.</li>
+                                <li><strong>No reliable serologic or antigen tests.</strong> PCR-based assays developing but not widely available.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (First-line):</strong> Lipid Amphotericin B (deoxycholate or lipid formulation) - high dose, Posaconazole or Isavuconazole (oral/IV - step-down or alternative to ampho B for less severe).</li>
+                                <li><strong>Drug Selection (Salvage/Combination):</strong> Echinocandins (no activity against Mucorales as monotherapy). Combination Amphotericin B + Posaconazole/Isavuconazole or other agents sometimes used.</li>
+                                <li><strong>Non-Pharmacologic:</strong> Aggressive surgical debridement of necrotic tissue - cornerstone of therapy. Reverse underlying risk factors (DKA management, neutropenia reversal). Hyperbaric oxygen (adjunct).</li>
+                                <li><strong>Dosing & Duration:</strong> Amphotericin B and Posaconazole/Isavuconazole high doses and prolonged duration, guided by clinical response, often weeks to months.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Rhizopus, Mucor, Lichtheimia (formerly Absidia), Rhizomucor. Rhizopus - most common genus.</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Non-septate hyphae with 90-degree branching, angioinvasion, necrosis, rhino-orbital-cerebral presentation, diabetes (DKA) - classic risk, aggressive surgical debridement, Lipid Amphotericin B/Posaconazole/Isavuconazole treatment. Differentiate from Aspergillosis (septate hyphae), bacterial cellulitis, necrotizing fasciitis. Emerging in association with COVID-19.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cryptococcosis -->
+            <div class="disease-card systemic-card" onclick="toggleCard(this)">
+                <h3>Cryptococcosis <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Cutaneous - Disseminated):</strong> Papules, nodules, pustules, plaques, ulcers, cellulitis, molluscum contagiosum-like lesions. Variable appearance, often non-specific.</li>
+                            <li><strong>Appearance (CNS - Cryptococcal Meningitis):</strong> Headache, fever, stiff neck, altered mental status. Most common and life-threatening manifestation.</li>
+                            <li><strong>Appearance (Pulmonary):</strong> Cough, chest pain, dyspnea, often milder symptoms than other pneumonias.</li>
+                            <li><strong>Appearance (Disseminated):</strong> CNS, lungs, skin, bone, prostate, liver.</li>
+                            <li><strong>Distribution:</strong> Worldwide (Cryptococcus neoformans), Pacific Northwest (Cryptococcus gattii), CNS (meningitis), lungs, skin (disseminated).</li>
+                            <li><strong>Risk Factors:</strong> <span class="risk-badge">HIV/AIDS</span> Immunocompromise (HIV/AIDS - classic risk factor, solid organ transplant, corticosteroids), lymphoma, sarcoidosis. Cryptococcus gattii can infect immunocompetent hosts.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Encapsulated yeast forms in tissue (CSF, skin biopsy, BAL). Capsule appears as a clear halo around the yeast.</li>
+                                <li><strong>Special Stains:</strong> India Ink stain (CSF - rapid detection of capsule), Mucicarmine stain (capsule stains red), Methenamine silver, PAS highlight yeast in tissue.</li>
+                                <li><strong>Culture:</strong> Yeast form colonies on Sabouraud dextrose agar, Birdseed (Niger seed) agar (Cryptococcus neoformans - brown colonies). CSF, blood, BAL, tissue cultures. Rapid growth.</li>
+                                <li><strong>Cryptococcal Antigen (CrAg) Testing:</strong> Serum and CSF CrAg (highly sensitive and specific for Cryptococcus neoformans and gattii). Screening test of choice for cryptococcal meningitis in HIV-positive patients. Quantitative titers for diagnosis and monitoring. Latex agglutination assays.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Cryptococcal Meningitis - Induction Therapy):</strong> Liposomal Amphotericin B + Flucytosine combination therapy is preferred for initial 2 weeks. Amphotericin B deoxycholate is alternative, but lipid formulation is preferred for CNS penetration and reduced nephrotoxicity.</li>
+                                <li><strong>Drug Selection (Cryptococcal Meningitis - Consolidation Therapy):</strong> High-dose Oral Fluconazole step-down therapy after induction, typically 8 weeks.</li>
+                                <li><strong>Drug Selection (Cryptococcal Meningitis - Maintenance Therapy):</strong> Low-dose Oral Fluconazole lifelong maintenance therapy in HIV/AIDS patients after consolidation to prevent recurrence. Discontinuation possible in stable, ART-treated HIV patients meeting criteria.</li>
+                                <li><strong>Drug Selection (Pulmonary/Extrapulmonary Non-CNS Cryptococcosis):</strong> Fluconazole (mild-moderate), Itraconazole (alternative), Amphotericin B (severe).</li>
+                                <li><strong>Dosing & Duration:</strong> Meningitis induction (Ampho B + Flucytosine) 2 weeks, consolidation (Fluconazole) 8 weeks, maintenance (Fluconazole) lifelong in HIV (if indicated). Pulmonary/extrapulmonary duration depends on severity, typically weeks to months.</li>
+                                <li><strong>Treatment Modifications:</strong> HIV-associated cryptococcosis - ART initiation timing crucial to avoid immune reconstitution inflammatory syndrome (IRIS). Therapeutic lumbar punctures to reduce CSF pressure in meningitis.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Cryptococcus neoformans, Cryptococcus gattii complex.</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Encapsulated yeast, India ink stain, CrAg test, CNS involvement (meningitis), HIV/AIDS classic association, Liposomal Amphotericin B + Flucytosine induction for meningitis, lifelong Fluconazole maintenance in HIV. Differentiate from bacterial meningitis, other fungal meningitis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Phaeohyphomycosis -->
+            <div class="disease-card systemic-card" onclick="toggleCard(this)">
+                <h3>Phaeohyphomycosis <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Subcutaneous, most common form tested in derm):</strong> Solitary subcutaneous nodule or cyst. Slowly progressive. Often on extremities, trauma history. Can ulcerate, drain.</li>
+                            <li><strong>Appearance (Cutaneous):</strong> Tinea-like lesions on hands, feet, nails (N. hyalinum, N. dimidiatum - also cause onychomycosis and tinea pedis-like).</li>
+                            <li><strong>Appearance (Superficial):</strong> Tinea nigra (already covered). Black Piedra (already covered).</li>
+                            <li><strong>Appearance (Systemic/CNS):</strong> Rare dissemination, CNS tropism especially with Cladophialophora bantiana. Brain abscess. Immunocompromised hosts.</li>
+                            <li><strong>Distribution:</strong> Subcutaneous tissue (extremities, trauma sites), skin (hands, feet, nails), CNS (disseminated).</li>
+                            <li><strong>Risk Factors:</strong> Trauma (subcutaneous), contact with soil/plants, Cladophialophora bantiana - neurotropic, even in relatively immunocompetent hosts. Immunocompromise increases risk of disseminated disease.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Pigmented (dematiaceous) septate hyphae in tissue (biopsy, cyst aspirate, skin scraping - depending on form). No sclerotic bodies or grains (vs. Chromoblasto and Mycetoma). Cyst-like lesions with fibrous capsule may be seen.</li>
+                                <li><strong>Special Stains:</strong> Melanin stains highlight pigmented hyphae. H&E, PAS, Methenamine silver also visualize fungi.</li>
+                                <li><strong>Culture:</strong> Dematiaceous (pigmented) mold colonies on Sabouraud dextrose agar. Variable growth rates depending on species. Exophiala jeanselmei, Exophiala dermatitidis, Alternaria, Phialophora, Curvularia, Bipolaris, Cladophialophora bantiana are examples.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Subcutaneous):</strong> Surgical excision often curative for localized lesions. Itraconazole, Posaconazole, Voriconazole (oral azoles - adjunct to surgery or for non-surgical candidates, less consistently effective monotherapy). Amphotericin B (lipid formulation for severe/disseminated).</li>
+                                <li><strong>Drug Selection (CNS Phaeohyphomycosis - Cladophialophora bantiana):</strong> Amphotericin B + Flucytosine combination. Voriconazole or Posaconazole. Aggressive surgical excision/debridement if feasible is crucial. Prognosis poor.</li>
+                                <li><strong>Drug Selection (Cutaneous/Superficial):</strong> Topical antifungals (azoles, allylamines) for tinea-like forms (N. hyalinum/dimidiatum). Not typically needed for classic subcutaneous cysts/nodules after excision.</li>
+                                <li><strong>Dosing & Duration:</strong> Subcutaneous - Oral azoles often prolonged (months) even after excision, depending on species and extent. CNS - prolonged IV and oral therapy, duration depends on clinical response, often very prolonged.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Large and diverse group of dematiaceous fungi. Exophiala jeanselmei, Exophiala dermatitidis (Wangiella dermatitidis), Alternaria, Phialophora, Curvularia, Bipolaris, Cladophialophora bantiana (neurotropic), Fonsecaea (rare cause, more common in chromoblastomycosis).</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Pigmented (dematiaceous) hyphae in tissue, subcutaneous cysts/nodules, trauma history, variable clinical forms, surgical excision key for subcutaneous type, poor prognosis for CNS infection, Itraconazole/Posaconazole/Voriconazole for medical therapy. Differentiate from chromoblastomycosis (sclerotic bodies), mycetoma (grains), sporotrichosis (lymphocutaneous).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Hyalohyphomycosis -->
+            <div class="disease-card systemic-card" onclick="toggleCard(this)">
+                <h3>Hyalohyphomycosis (Fusariosis, Paecilomycosis) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Cutaneous - Disseminated):</strong> Necrotic papules and nodules, often with eschars. Target lesions, ecthyma gangrenosum-like lesions, cellulitis. Angioinvasive, embolic lesions.</li>
+                            <li><strong>Appearance (Onychomycosis - Fusarium):</strong> Superficial White Onychomycosis, distal subungual. May be rapidly progressive.</li>
+                            <li><strong>Appearance (Pulmonary):</strong> Invasive pulmonary aspergillosis-like pneumonia.</li>
+                            <li><strong>Appearance (Disseminated):</strong> Skin, lungs, sinuses, eyes, disseminated, especially in severely neutropenic patients (hematologic malignancy, stem cell transplant).</li>
+                            <li><strong>Distribution:</strong> Ubiquitous in environment (soil, air, water), skin (disseminated lesions), nails (onychomycosis).</li>
+                            <li><strong>Risk Factors:</strong> <span class="risk-badge">Neutropenia</span> Severe Neutropenia (major risk factor, chemotherapy, stem cell transplant), immunocompromise, burns, catheter-related infections (Fusarium), contact lens keratitis (Fusarium).</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Hyaline (non-pigmented) septate hyphae, similar to Aspergillus but may be more variable in width and septation and less uniform branching. Banana-shaped or canoe-shaped macroconidia may be seen in culture preparations but not typically in tissue.</li>
+                                <li><strong>Special Stains:</strong> H&E, PAS, Methenamine silver highlight hyaline hyphae.</li>
+                                <li><strong>Culture:</strong> Rapidly growing, fluffy mold colonies on Sabouraud dextrose agar, variable colony color depending on species - Fusarium spp. often brightly colored (pink, purple, yellow).</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Invasive Fusariosis):</strong> Voriconazole preferred. Posaconazole and Isavuconazole alternatives. Amphotericin B (lipid formulation - less effective than voriconazole). Echinocandins not effective.</li>
+                                <li><strong>Drug Selection (Localized Cutaneous/Onychomycosis):</strong> Topical antifungals for onychomycosis only – limited efficacy. Oral Voriconazole or Posaconazole for localized but refractory cutaneous infections if surgical excision not feasible.</li>
+                                <li><strong>Non-Pharmacologic:</strong> Neutropenia reversal (key to successful treatment), remove catheters, surgical debridement of localized lesions.</li>
+                                <li><strong>Dosing & Duration:</strong> Invasive - Voriconazole or Posaconazole until neutrophil recovery and resolution of infection, prolonged therapy often needed.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Fusarium spp. (most common), Paecilomyces spp., Acremonium spp., Penicillium spp. (excluding Talaromyces marneffei - which is addressed separately in the text but technically also Hyalohyphomycosis).</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Opportunistic, hyaline septate hyphae (Aspergillus-like, but variable), necrotic cutaneous lesions, angioinvasion, neutropenia - key risk factor, Voriconazole preferred treatment, brightly colored Fusarium colonies. Differentiate from invasive Aspergillosis (clinically similar, Voriconazole effective for both, but key microscopic features differ and Galactomannan more helpful for Aspergillosis).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trichosporonosis -->
+            <div class="disease-card systemic-card" onclick="toggleCard(this)">
+                <h3>Trichosporonosis <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Disseminated Trichosporonosis - Systemic):</strong> Fever, sepsis, pneumonia, cutaneous lesions – papulovesicles, purpuric papules, necrotic nodules. Hepatosplenomegaly, renal failure. High mortality in disseminated disease.</li>
+                            <li><strong>Appearance (White Piedra):</strong> Superficial hair infection, white nodules on hair shaft (already covered in Superficial Mycoses section).</li>
+                            <li><strong>Appearance (Cutaneous - Rare, non-specific):</strong> Papules, nodules.</li>
+                            <li><strong>Appearance (Onychomycosis - Rare):</strong> Onychomycosis.</li>
+                            <li><strong>Distribution:</strong> Disseminated - widespread, lungs, skin, other organs. White Piedra - hair shaft.</li>
+                            <li><strong>Risk Factors:</strong> <span class="risk-badge">Neutropenia</span> Severe immunocompromise (neutropenia, hematologic malignancy, stem cell transplant - key risk for disseminated disease).</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy:</strong> Hyaline hyphae, arthroconidia, blastoconidia in tissue (skin, blood, BAL). Similar to yeast but with hyphae.</li>
+                                <li><strong>Special Stains:</strong> Gram stain, PAS, Methenamine silver highlight fungi.</li>
+                                <li><strong>Culture:</strong> Yeast-like colonies on Sabouraud dextrose agar, cream-colored, rapid growth. Urease positive.</li>
+                                <li><strong>Identification to species level increasingly important due to variable antifungal susceptibility.</strong></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (Disseminated Trichosporonosis):</strong> Amphotericin B (lipid formulation) - traditionally first-line, Voriconazole and Posaconazole now considered alternatives or potentially more effective (based on in vitro data, limited clinical data). Echinocandins generally ineffective.</li>
+                                <li><strong>Drug Selection (White Piedra):</strong> Topical antifungals (ketoconazole shampoo) for hair nodules. Oral Terbinafine may be considered.</li>
+                                <li><strong>Dosing & Duration:</strong> Disseminated - Prolonged IV therapy with Amphotericin B or Voriconazole/Posaconazole, duration guided by clinical response and source control (if any).</li>
+                                <li><strong>Treatment Modifications:</strong> Neutropenia reversal key to successful treatment. Catheter removal if catheter-related.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Trichosporon asahii (most common cause of disseminated disease), Trichosporon mucoides, Trichosporon asteroides, and other Trichosporon species. Previously collectively known as Trichosporon beigelii.</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Opportunistic yeast-like fungus (with hyphae and arthroconidia), urease positive, disseminated disease in severely neutropenic patients, White Piedra (superficial hair infection, different clinical context), Amphotericin B/Voriconazole/Posaconazole treatment. Echinocandins generally ineffective. Species identification important due to variable resistance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pneumocystis Pneumonia -->
+            <div class="disease-card systemic-card" onclick="toggleCard(this)">
+                <h3>Pneumocystis Pneumonia (PCP) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance (Cutaneous - very rare, disseminated PCP):</strong> Non-tender papules, nodules, skin-colored or erythematous, may ulcerate. External ear most common cutaneous site.</li>
+                            <li><strong>Appearance (Pulmonary Pneumocystis Pneumonia - PCP, primary focus):</strong> Progressive dyspnea, dry cough, fever, hypoxia. Bilateral interstitial pneumonia.</li>
+                            <li><strong>Distribution:</strong> Lungs (primary), disseminated to skin (rare), external ear (rare), other organs in disseminated PCP (rare).</li>
+                            <li><strong>Risk Factors:</strong> <span class="risk-badge">HIV/AIDS</span> HIV/AIDS (classic risk factor, CD4 < 200 cells/µL), organ transplant recipients, corticosteroids, immunosuppression, primary immunodeficiencies.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Microscopy (Lung):</strong> Alveolar "foamy" exudate on bronchoalveolar lavage (BAL) or induced sputum. Cysts and trophozoites (different life cycle forms, stains differentiate).</li>
+                                <li><strong>Microscopy (Skin - very rare):</strong> Foamy infiltrate in dermis.</li>
+                                <li><strong>Special Stains:</strong> GMS stain (cysts - classic "cup-shaped" cysts), Diff-Quik stain (trophozoites), Direct fluorescent antibody (DFA) stain. Giemsa - stains both cysts and trophozoites but less sensitive for cysts.</li>
+                                <li><strong>PCR:</strong> Highly sensitive PCR assays available on BAL, induced sputum, blood (research settings).</li>
+                                <li><strong>Beta-D-Glucan Assay:</strong> Serum Beta-D-Glucan - Elevated, very sensitive but non-specific. Helpful to rule out PCP if negative, but positive test requires confirmation by other methods.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Drug Selection (PCP - first-line):</strong> Trimethoprim-Sulfamethoxazole (TMP-SMX) (oral or IV).</li>
+                                <li><strong>Drug Selection (PCP - alternative regimens for TMP-SMX allergy or failure):</strong> Pentamidine (IV), Dapsone (oral) + Trimethoprim (oral), Atovaquone (oral), Primaquine + Clindamycin (oral).</li>
+                                <li><strong>Drug Selection (Adjunctive Therapy):</strong> Corticosteroids (for moderate to severe PCP to reduce inflammation and improve oxygenation - PaO2 < 70 mmHg or A-a gradient > 35 mmHg).</li>
+                                <li><strong>Prophylaxis (PCP):</strong> TMP-SMX prophylaxis for high-risk patients (HIV CD4 < 200, transplant recipients, etc.). Dapsone, Atovaquone, Aerosolized Pentamidine alternatives for TMP-SMX intolerance.</li>
+                                <li><strong>Dosing & Duration:</strong> PCP treatment - TMP-SMX for 21 days. Alternatives and duration depend on agent and response. PCP Prophylaxis - TMP-SMX daily or intermittent dosing.</li>
+                                <li><strong>Treatment Modifications:</strong> Adjust TMP-SMX dose for renal impairment. Consider adjunctive corticosteroids for moderate to severe PCP. Monitor for TMP-SMX side effects (rash, myelosuppression).</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Causative Organism:</h4>
+                        <p>Pneumocystis jirovecii (fungus, not protozoan).</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Alveolar "foamy" exudate, cup-shaped cysts on GMS stain, TMP-SMX treatment, HIV/AIDS classic association, pneumonia, non-specific skin lesions (very rare). Beta-D-Glucan elevated, but not specific. Differentiate from bacterial pneumonia, other opportunistic pneumonias in immunocompromised hosts.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>a
+        </div>
+    </div>
+    <!-- VI. CANDIDIASIS -->
+    <div id="candidiasis-section" class="section candidiasis-section">
+        <div class="disease-container">
+            <!-- Median Rhomboid Glossitis -->
+            <div class="disease-card systemic-card" onclick="toggleCard(this)">
+                <h3>Median Rhomboid Glossitis (MRG) <span class="frequency-badge"></span></h3>
+                <div class="expand-icon">+</div>
+                <div class="card-content">
+                    <div class="key-points">
+                        <h4>Clinical Presentation:</h4>
+                        <ul>
+                            <li><strong>Appearance:</strong> Sharply demarcated, smooth, erythematous, lozenge-shaped area on the mid-posterior dorsal tongue. Size ranges from &lt;1 cm to nearly 3 cm. Chronic lesions may develop a micronodular surface.</li>
+                            <li><strong>Distribution:</strong> Mid-posterior dorsal tongue. May have a "kissing lesion" on the posterior hard palate.</li>
+                            <li><strong>Risk Factors:</strong> Immunosuppression (HIV, diabetes, steroid use), chronic trauma or irritation, use of dentures. Not typically seen in children.</li>
+                            <li><strong>Symptoms:</strong> Usually asymptomatic. Some patients report mild burning or itching sensation.</li>
+                        </ul>
+                        
+                        <div class="diagnosis-box">
+                            <h4>Morphology & Diagnostics:</h4>
+                            <ul>
+                                <li><strong>Clinical diagnosis:</strong> Usually sufficient based on characteristic appearance.</li>
+                                <li><strong>Fungal Culture:</strong> Positive for Candida albicans.</li>
+                                <li><strong>Biopsy (If Needed):</strong> Shows chronic inflammatory infiltrate, possible hyperplastic candidiasis in long-standing cases.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="treatment-box">
+                            <h4>Treatment Specifics:</h4>
+                            <ul>
+                                <li><strong>Antifungal Therapy (First-Line):</strong> Clotrimazole oral troches, 10 mg (dissolve 1 troche in the mouth 5 times daily for 10 days) or Fluconazole 100 mg (Day 1: 2 tablets, Days 2-6: 1 tablet daily).</li>
+                                <li><strong>Adjunctive Measures:</strong> Improve oral hygiene, avoid smoking, alcohol, and spicy foods. For dentures: disinfect regularly to prevent recurrence.</li>
+                                <li><strong>Note:</strong> Spontaneous resolution may occur in some cases.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>Specific Fungi:</h4>
+                        <p>Candida albicans.</p>
+                        
+                        <div class="unique-box">
+                            <h4>Unique Identifiers:</h4>
+                            <p>Lozenge-shaped erythematous atrophy on mid-posterior dorsal tongue, loss of filiform papillae, possible "kissing lesion" on posterior hard palate. Differential diagnosis includes oral squamous cell carcinoma, erythroplakia, geographic tongue, granular cell tumor, and vascular lesions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- Angular Cheilitis -->
+        <div class="disease-card systemic-card" onclick="toggleCard(this)">
+            <h3>Angular Cheilitis <span class="frequency-badge"></span></h3>
+            <div class="expand-icon">+</div>
+            <div class="card-content">
+                <div class="key-points">
+                    <h4>Clinical Presentation:</h4>
+                    <ul>
+                        <li><strong>Appearance:</strong> Erythema, cracking, maceration, and fissuring at the corners of the mouth. Bilateral involvement is typical (unlike herpes simplex). Chronic cases may appear thickened, crusted, or eczematous.</li>
+                        <li><strong>Distribution:</strong> Oral commissures (corners of the mouth). May extend to wider perioral area in lip-licking dermatitis variant.</li>
+                        <li><strong>Risk Factors:</strong> Poorly fitting dentures, chronic lip-licking, dry/cold climates, diabetes mellitus, immunosuppression, nutritional deficiencies (iron, B vitamins, zinc), inflammatory bowel disease.</li>
+                        <li><strong>Symptoms:</strong> Mild burning, pain, or discomfort. May be exacerbated by mouth opening, spicy foods, or acidic beverages.</li>
+                    </ul>
+                    
+                    <div class="diagnosis-box">
+                        <h4>Morphology & Diagnostics:</h4>
+                        <ul>
+                            <li><strong>Clinical diagnosis:</strong> Usually sufficient.</li>
+                            <li><strong>Fungal Culture or KOH Prep:</strong> Positive for Candida if fungal infection is suspected.</li>
+                            <li><strong>Bacterial Culture:</strong> Identifies Staphylococcus aureus in superinfected cases.</li>
+                            <li><strong>Blood Tests (if refractory):</strong> Iron studies, vitamin B2/B6/B12, folate, zinc levels, diabetes screening.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="treatment-box">
+                        <h4>Treatment Specifics:</h4>
+                        <ul>
+                            <li><strong>General Measures:</strong> Address underlying risk factors (nutritional deficiencies, diabetes, poor oral hygiene), proper denture hygiene and disinfection.</li>
+                            <li><strong>Topical Treatment (First-Line):</strong> Antifungal therapy (Nystatin cream, Clotrimazole cream 2-3 times/day), antibacterial therapy if needed (Mupirocin ointment for Staph), anti-inflammatory therapy (mild steroid cream combined with antifungal for severe inflammation).</li>
+                            <li><strong>Systemic Treatment (For Refractory Cases):</strong> Oral antifungals (Fluconazole 100 mg daily for 7 days) if intraoral candidiasis present, oral antibiotics if extensive bacterial superinfection.</li>
+                        </ul>
+                    </div>
+                    
+                    <h4>Specific Fungi/Bacteria:</h4>
+                    <p>Candida albicans and/or Staphylococcus aureus.</p>
+                    
+                    <div class="unique-box">
+                        <h4>Unique Identifiers:</h4>
+                        <p>Bilateral erythema, fissuring, and maceration at oral commissures. Associated with dentures, diabetes, nutritional deficiencies. Treatment includes topical antifungals, mild steroids, and addressing underlying causes. Differential diagnosis includes herpes simplex (unilateral), lip-licking dermatitis, secondary syphilis, and atopic/seborrheic dermatitis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Erosio Interdigitalis Blastomycetica -->
+        <div class="disease-card systemic-card" onclick="toggleCard(this)">
+            <h3>Erosio Interdigitalis Blastomycetica (EIB) <span class="frequency-badge"></span></h3>
+            <div class="expand-icon">+</div>
+            <div class="card-content">
+                <div class="key-points">
+                    <h4>Clinical Presentation:</h4>
+                    <ul>
+                        <li><strong>Appearance:</strong> Round-to-oval erythematous patches & plaques with macerated appearance. Pustules that rupture, leaving an erythematous base with a collarette of scale. Pain and pruritus are common.</li>
+                        <li><strong>Distribution:</strong> Most commonly affects the third web space of the hands (between middle and ring fingers). Can also involve toe web spaces.</li>
+                        <li><strong>Risk Factors:</strong> Frequent handwashing (nurses, dishwashers, cleaners), occupational exposure & moisture retention, occlusive footwear, warm/humid climates, diabetes mellitus, immunosuppression, obesity.</li>
+                    </ul>
+                    
+                    <div class="diagnosis-box">
+                        <h4>Morphology & Diagnostics:</h4>
+                        <ul>
+                            <li><strong>Clinical diagnosis:</strong> Based on history & examination.</li>
+                            <li><strong>KOH Preparation:</strong> Reveals budding yeast and pseudohyphae (confirming Candida infection).</li>
+                            <li><strong>Fungal Culture:</strong> Can identify Candida species if diagnosis is uncertain.</li>
+                            <li><strong>Bacterial Culture:</strong> If Gram-negative bacilli are present, consider adding antibacterial treatment.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="treatment-box">
+                        <h4>Treatment Specifics:</h4>
+                        <ul>
+                            <li><strong>General Measures:</strong> Eliminate moisture and irritation, keep web spaces dry (absorbent powders, avoid occlusion), wear protective gloves, remove tight-fitting rings.</li>
+                            <li><strong>Topical Treatment (First-Line):</strong> Nystatin cream (100,000 units/g), Ketoconazole 2% cream, or Econazole cream applied twice daily until resolution. For bacterial superinfection: Topical gentamicin 0.1% cream for Gram-negative coverage.</li>
+                            <li><strong>Systemic Treatment (For Refractory Cases):</strong> Fluconazole 100 mg daily for 7-14 days.</li>
+                        </ul>
+                    </div>
+                    
+                    <h4>Specific Fungi:</h4>
+                    <p>Candida species.</p>
+                    
+                    <div class="unique-box">
+                        <h4>Unique Identifiers:</h4>
+                        <p>Affects third web space of hand, macerated erythematous plaques with satellite pustules, history of prolonged water immersion. Differential diagnosis includes irritant contact dermatitis, tinea manuum, pustular psoriasis, tinea pedis, erythrasma, and mixed toe web infections.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Candidiasis -->
+        <div class="disease-card systemic-card" onclick="toggleCard(this)">
+            <h3>Candidiasis <span class="frequency-badge"></span></h3>
+            <div class="expand-icon">+</div>
+            <div class="card-content">
+                <div class="key-points">
+                    <h4>Clinical Presentation:</h4>
+                    <ul>
+                        <li><strong>Mucocutaneous Candidiasis:</strong>
+                            <ul>
+                                <li><strong>Thrush (Oral Candidiasis):</strong> White plaques on tongue, buccal mucosa, palate. Easily scraped off, leaving erythematous base.</li>
+                                <li><strong>Vaginal/Vulvovaginal Candidiasis:</strong> Thick, white, curd-like vaginal discharge. Pruritus, dysuria, dyspareunia.</li>
+                                <li><strong>Perianal & Genital Candidiasis:</strong> Erythematous patches with satellite pustules. In men: Candidal balanitis.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Cutaneous Candidiasis:</strong>
+                            <ul>
+                                <li><strong>Intertrigo:</strong> Erythematous plaques in skin folds with vesicles, pustules, satellite lesions.</li>
+                                <li><strong>Diaper Dermatitis:</strong> Erythematous rash in diaper area with satellite pustules.</li>
+                                <li><strong>Other variants:</strong> Generalized cutaneous, Candida miliaria, Erosio Interdigitalis Blastomycetica, Candida folliculitis, mammary candidiasis.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Risk Factors:</strong> Diabetes mellitus, immunosuppression, endocrine disorders, broad-spectrum antibiotics, occlusive clothing, excessive moisture, dentures, indwelling catheters.</li>
+                    </ul>
+                    
+                    <div class="diagnosis-box">
+                        <h4>Morphology & Diagnostics:</h4>
+                        <ul>
+                            <li><strong>Clinical Examination:</strong> Erythematous plaques, satellite pustules, white plaques that scrape off easily.</li>
+                            <li><strong>KOH Preparation:</strong> Budding yeast & pseudohyphae.</li>
+                            <li><strong>Fungal Culture:</strong> Confirms Candida species.</li>
+                            <li><strong>Blood Tests (if systemic suspected):</strong> Beta-D-glucan assay.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="treatment-box">
+                        <h4>Treatment Specifics:</h4>
+                        <ul>
+                            <li><strong>General Measures:</strong> Keep affected areas dry, avoid occlusive clothing, denture disinfection (if oral candidiasis present).</li>
+                            <li><strong>Topical Antifungals (First-Line):</strong> Nystatin (100,000 units/g), Miconazole 2% cream, Econazole, Ketoconazole creams.</li>
+                            <li><strong>Systemic Antifungals (For Extensive Disease):</strong> Fluconazole 150 mg single dose (for vaginal candidiasis), Fluconazole 100 mg daily for 7-14 days (for severe cutaneous), Itraconazole 100 mg BID for 14 days (for Candida folliculitis).</li>
+                            <li><strong>Special Considerations:</strong> Erosio Interdigitalis Blastomycetica needs antifungal + topical antibacterial, treat both mother & infant in mammary candidiasis.</li>
+                        </ul>
+                    </div>
+                    
+                    <h4>Specific Fungi:</h4>
+                    <p>Candida albicans (70-80% of cases), other Candida species.</p>
+                    
+                    <div class="unique-box">
+                        <h4>Unique Identifiers:</h4>
+                        <p>Satellite pustules are classic for Candida. Oral candidiasis presents with white plaques that scrape off easily. Check for diabetes or immunosuppression in recurrent cases. Differential diagnosis includes tinea infections, erythrasma, contact dermatitis, seborrheic dermatitis, and herpes simplex.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Granuloma Gluteale -->
+        <div class="disease-card systemic-card" onclick="toggleCard(this)">
+            <h3>Granuloma Gluteale (Adultorum & Infantum) <span class="frequency-badge"></span></h3>
+            <div class="expand-icon">+</div>
+            <div class="card-content">
+                <div class="key-points">
+                    <h4>Clinical Presentation:</h4>
+                    <ul>
+                        <li><strong>Granuloma Gluteale Adultorum (GGA):</strong>
+                            <ul>
+                                <li><strong>Appearance:</strong> Flat-topped papules & nodules (often erosive), pseudoverrucous papules, bright or deep red erythematous patches/plaques with maceration.</li>
+                                <li><strong>Location:</strong> Primarily on buttocks, can involve vulva or areas with occlusive dressing.</li>
+                                <li><strong>Symptoms:</strong> Severe pain (at rest & with pressure), pruritus may be present.</li>
+                                <li><strong>Common cause:</strong> Topical benzocaine use (Lanacane, OTC anesthetics).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Granuloma Gluteale Infantum (GGI):</strong>
+                            <ul>
+                                <li><strong>Appearance:</strong> Oval, firm, smooth to slightly scaly papules/nodules (5-40 mm), red-purple to red-brown color.</li>
+                                <li><strong>Location:</strong> Gluteal surface, groin, upper thighs, lower abdomen. Spares inguinal & gluteal clefts.</li>
+                                <li><strong>Common causes:</strong> Prolonged irritant dermatitis, topical halogenated corticosteroids, Candida overgrowth.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Risk Factors:</strong> Chronic moisture, occlusion, topical agents (benzocaine, corticosteroids), Candida superinfection.</li>
+                    </ul>
+                    
+                    <div class="diagnosis-box">
+                        <h4>Morphology & Diagnostics:</h4>
+                        <ul>
+                            <li><strong>Clinical Diagnosis:</strong> History of benzocaine use (GGA) or topical corticosteroid use (GGI), distinctive nodular lesions.</li>
+                            <li><strong>Biopsy (rarely needed):</strong> Nonspecific inflammation, no true granulomas (despite the name).</li>
+                            <li><strong>Fungal studies:</strong> May identify Candida if superinfection is present.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="treatment-box">
+                        <h4>Treatment Specifics:</h4>
+                        <ul>
+                            <li><strong>GGA Treatment:</strong> Discontinue benzocaine (manage withdrawal flares with prednisone taper), keep area dry, avoid occlusive dressings, topical high-potency corticosteroids (max 2 weeks), oral corticosteroids (prednisone 0.5–1 mg/kg/day tapered over 2-3 weeks), antifungals if Candida present.</li>
+                            <li><strong>GGI Treatment:</strong> Discontinue halogenated corticosteroids, zinc oxide ointment as protective barrier, super-absorbent diapers, frequent changes, mild cleansers. Lesions spontaneously regress in 3-6 weeks.</li>
+                        </ul>
+                    </div>
+                    
+                    <h4>Associated Organisms:</h4>
+                    <p>Candida albicans (secondary superinfection in many cases).</p>
+                    
+                    <div class="unique-box">
+                        <h4>Unique Identifiers:</h4>
+                        <p>Despite the name, not a true granuloma. GGA often caused by topical benzocaine in adults. GGI occurs in infants due to irritant dermatitis + corticosteroids. Candida superinfection common. GGA frequently misdiagnosed as STD. GGI spares gluteal & inguinal clefts.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chronic Mucocutaneous Candidiasis -->
+        <div class="disease-card systemic-card" onclick="toggleCard(this)">
+            <h3>Chronic Mucocutaneous Candidiasis (CMC) <span class="frequency-badge"></span></h3>
+            <div class="expand-icon">+</div>
+            <div class="card-content">
+                <div class="key-points">
+                    <h4>Clinical Presentation:</h4>
+                    <ul>
+                        <li><strong>Appearance:</strong> Chronic, recurrent Candida infections affecting:
+                            <ul>
+                                <li><strong>Oral mucosa:</strong> White plaques on tongue and buccal mucosa (thrush).</li>
+                                <li><strong>Nails:</strong> Thickened dystrophic nails, painful periungual inflammation.</li>
+                                <li><strong>Skin:</strong> Scaly erythematous plaques on face, scalp, intertriginous areas, trunk, and extremities. Can develop annular/arcuate plaques.</li>
+                                <li><strong>Vaginal area:</strong> Pruritic, shiny red plaques with satellite pustules, curd-like discharge.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Distribution:</strong> Mucosal surfaces, skin, nails.</li>
+                        <li><strong>Risk Factors:</strong> Immune dysfunction (particularly impaired Th17 cell-mediated immunity), genetic mutations (STAT1, AIRE, IL-17F, IL-17RC), associated endocrine disorders.</li>
+                    </ul>
+                    
+                    <div class="diagnosis-box">
+                        <h4>Morphology & Diagnostics:</h4>
+                        <ul>
+                            <li><strong>Clinical Diagnosis:</strong> Recurrent Candida infections affecting mucosa, skin, nails that lack response to conventional therapy.</li>
+                            <li><strong>KOH Preparation:</strong> Budding yeast & pseudohyphae in skin scrapings.</li>
+                            <li><strong>Fungal Culture:</strong> Identifies Candida species.</li>
+                            <li><strong>Skin Biopsy:</strong> Shows pseudohyphae & positive PAS stain in stratum corneum.</li>
+                            <li><strong>Genetic & Immune Testing:</strong> STAT1, IL-17, AIRE mutations, serologic screening for associated endocrinopathies.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="treatment-box">
+                        <h4>Treatment Specifics:</h4>
+                        <ul>
+                            <li><strong>General Measures:</strong> Maintain skin & oral hygiene, treat underlying immunodeficiency or associated endocrine disorder.</li>
+                            <li><strong>First-Line Systemic Antifungals:</strong> Fluconazole (preferred) 100-200 mg daily for chronic suppression, Itraconazole/Voriconazole if resistance develops, Posaconazole/Caspofungin/Amphotericin B for severe or refractory cases.</li>
+                            <li><strong>Alternative Therapies:</strong> Ruxolitinib (JAK Inhibitor) for STAT1 mutation-associated CMC, Granulocyte Colony-Stimulating Factor (G-CSF) to enhance IL-17 production.</li>
+                            <li><strong>Monitoring:</strong> Annual screening for autoimmune endocrinopathies, long-term antifungal therapy in most cases.</li>
+                        </ul>
+                    </div>
+                    
+                    <h4>Specific Fungi:</h4>
+                    <p>Candida albicans, other Candida species.</p>
+                    
+                    <div class="unique-box">
+                        <h4>Unique Identifiers:</h4>
+                        <p>Chronic, recurrent Candida infection due to Th17 dysfunction. Most common genetic mutation: STAT1 gain-of-function. Classic triad: oral thrush, chronic nail dystrophy, & skin plaques resistant to standard therapy. Associated syndromes include APECED (Addisons, hypoparathyroidism, mucocutaneous candidiasis) and Hyper-IgE Syndrome (Job Syndrome).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        Interactive Fungal Diseases Study Guide | Created for easy memorization
+    </footer>
+    
+    <script>
+        function showSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(elem => {
+                elem.classList.remove('active');
+                elem.classList.remove('search-result');
+            });
+            
+            // Deactivate all buttons
+            document.querySelectorAll('.tabs button').forEach(btn => {
+                btn.classList.remove('active-superficial');
+                btn.classList.remove('active-dermato');
+                btn.classList.remove('active-malassezia');
+                btn.classList.remove('active-subcutaneous');
+                btn.classList.remove('active-systemic');
+                btn.classList.remove('active-candida');
+            });
+            
+            // Show selected section
+            if (section === 'superficial') {
+                document.getElementById('superficial-section').classList.add('active');
+                document.querySelector('.tabs button:nth-child(1)').classList.add('active-superficial');
+            } else if (section === 'dermato') {
+                document.getElementById('dermato-section').classList.add('active');
+                document.querySelector('.tabs button:nth-child(2)').classList.add('active-dermato');
+            } else if (section === 'malassezia') {
+                document.getElementById('malassezia-section').classList.add('active');
+                document.querySelector('.tabs button:nth-child(3)').classList.add('active-malassezia');
+            } else if (section === 'subcutaneous') {
+                document.getElementById('subcutaneous-section').classList.add('active');
+                document.querySelector('.tabs button:nth-child(4)').classList.add('active-subcutaneous');
+            } else if (section === 'systemic') {
+                document.getElementById('systemic-section').classList.add('active');
+                document.querySelector('.tabs button:nth-child(5)').classList.add('active-systemic');
+            } else if (section === 'candida') {
+                document.getElementById('candidiasis-section').classList.add('active');
+                document.querySelector('.tabs button:nth-child(6)').classList.add('active-candida');
+            }
+        }
+        
+        function toggleCard(card) {
+            card.classList.toggle('expanded');
+            // Store expanded state for search functionality
+            card.dataset.wasExpanded = card.classList.contains('expanded') ? 'true' : '';
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.querySelector('.search-button');
+
+            // Save initial state of all cards
+            document.querySelectorAll('.disease-card').forEach(card => {
+                card.setAttribute('data-original-state', card.classList.contains('expanded') ? 'expanded' : 'collapsed');
+                
+                // Update original state when manually expanded/collapsed
+                card.addEventListener('click', function(e) {
+                    // Don't update if this was triggered during search
+                    if (searchInput.value.trim() === '') {
+                        // Wait for toggle to complete
+                        setTimeout(() => {
+                            this.setAttribute('data-original-state', 
+                                this.classList.contains('expanded') ? 'expanded' : 'collapsed');
+                        }, 10);
+                    }
+                });
+            });
+
+            function resetSearch() {
+                // Remove all highlights
+                document.querySelectorAll('mark').forEach(mark => {
+                    const text = mark.textContent;
+                    mark.parentNode.replaceChild(document.createTextNode(text), mark);
+                });
+                
+                // Hide no results message if it exists
+                const noResultsMessage = document.getElementById('noResults');
+                if (noResultsMessage) {
+                    noResultsMessage.style.display = 'none';
+                }
+
+                // Reset sections to their original state
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('search-result');
+                });
+                
+                // Reset all highlight classes
+                document.querySelectorAll('.has-match').forEach(el => {
+                    el.classList.remove('has-match');
+                });
+                
+                // Restore cards to their original state
+                document.querySelectorAll('.disease-card').forEach(card => {
+                    if (card.hasAttribute('data-original-state')) {
+                        if (card.getAttribute('data-original-state') === 'expanded') {
+                            card.classList.add('expanded');
+                        } else {
+                            card.classList.remove('expanded');
+                        }
+                    }
+                });
+            }
+
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                
+                // If search is empty, reset everything
+                if (searchTerm === '') {
+                    resetSearch();
+                    return;
+                }
+
+                const sections = document.querySelectorAll('.section');
+                let found = false;
+
+                // First reset any existing highlights and collapse all cards
+                resetSearch();
+
+                // Make sure all cards are collapsed before starting the search
+                document.querySelectorAll('.disease-card').forEach(card => {
+                    // Save the existing state if we haven't already
+                    if (!card.hasAttribute('data-original-state')) {
+                        card.setAttribute('data-original-state', card.classList.contains('expanded') ? 'expanded' : 'collapsed');
+                    }
+                    // Collapse all cards initially
+                    card.classList.remove('expanded');
+                });
+
+                // Remove any previous has-match classes
+                document.querySelectorAll('.has-match').forEach(el => {
+                    el.classList.remove('has-match');
+                });
+
+                sections.forEach(section => {
+                    let sectionHasMatch = false;
+                    const mnemonicBoxes = section.querySelectorAll('.mnemonic-box');
+                    const diseaseCards = section.querySelectorAll('.disease-card');
+                    
+                    // Check mnemonic boxes
+                    mnemonicBoxes.forEach(box => {
+                        if (box.textContent.toLowerCase().includes(searchTerm)) {
+                            box.classList.add('has-match');
+                            highlightText(box, searchTerm);
+                            sectionHasMatch = true;
+                        }
+                    });
+                    
+                    // Check each disease card
+                    diseaseCards.forEach(card => {
+                        let cardHasMatch = false;
+                        const cardTitle = card.querySelector('h3');
+                        
+                        // Check card title
+                        if (cardTitle && cardTitle.textContent.toLowerCase().includes(searchTerm)) {
+                            cardTitle.classList.add('has-match');
+                            highlightText(cardTitle, searchTerm);
+                            cardHasMatch = true;
+                        }
+                        
+                        // Check within card content - target specific sections
+                        const contentBlocks = card.querySelectorAll('.key-points, .diagnosis-box, .treatment-box, .key-points div, h4');
+                        
+                        contentBlocks.forEach(block => {
+                            if (block.textContent.toLowerCase().includes(searchTerm)) {
+                                block.classList.add('has-match');
+                                highlightText(block, searchTerm);
+                                cardHasMatch = true;
+                            }
+                        });
+                        
+                        if (cardHasMatch) {
+                            card.classList.add('has-match');
+                            // Only expand cards with matches
+                            card.classList.add('expanded');
+                            sectionHasMatch = true;
+                        } else {
+                            // Keep cards without matches collapsed
+                            card.classList.remove('expanded');
+                        }
+                    });
+                    
+                    if (sectionHasMatch) {
+                        section.classList.add('search-result');
+                        found = true;
+                    }
+                });
+
+                // Show a "no results" message if needed
+                const noResultsMessage = document.getElementById('noResults') || createNoResultsMessage();
+                noResultsMessage.style.display = found ? 'none' : 'block';
+                
+                // Scroll to the first match
+                if (found) {
+                    const firstMatch = document.querySelector('.has-match');
+                    if (firstMatch) {
+                        firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            }
+
+            function highlightText(element, searchTerm) {
+                const walker = document.createTreeWalker(
+                    element,
+                    NodeFilter.SHOW_TEXT,
+                    null,
+                    false
+                );
+
+                const nodes = [];
+                let node;
+                while (node = walker.nextNode()) {
+                    nodes.push(node);
+                }
+
+                nodes.forEach(node => {
+                    const text = node.textContent;
+                    if (text.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        const span = document.createElement('span');
+                        
+                        // Use case-insensitive regex with global flag to find all occurrences
+                        span.innerHTML = text.replace(
+                            new RegExp(`(${searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi'),
+                            '<mark>$1</mark>'
+                        );
+                        
+                        if (node.parentNode) {
+                            node.parentNode.replaceChild(span, node);
+                        }
+                    }
+                });
+            }
+
+            function createNoResultsMessage() {
+                const message = document.createElement('div');
+                message.id = 'noResults';
+                message.style.textAlign = 'center';
+                message.style.padding = '20px';
+                message.style.color = '#666';
+                message.textContent = 'No results found. Try different keywords.';
+                document.querySelector('.main-container').appendChild(message);
+                return message;
+            }
+
+            // Remove input event listener - search only happens on button click or enter key
+            // Comment out this line to disable real-time search
+            // searchInput.addEventListener('input', performSearch);
+            
+            // Keep the button click and enter key handlers
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+
+            // Track initially expanded cards
+            document.querySelectorAll('.disease-card').forEach(card => {
+                card.dataset.wasExpanded = card.classList.contains('expanded') ? 'true' : '';
+                
+                // Update wasExpanded dataset when user manually expands/collapses
+                card.addEventListener('click', function() {
+                    // We use setTimeout to let the toggleCard function complete first
+                    setTimeout(() => {
+                        card.dataset.wasExpanded = card.classList.contains('expanded') ? 'true' : '';
+                    }, 10);
+                });
+            });
+        });
+    </script>
