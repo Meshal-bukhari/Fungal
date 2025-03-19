@@ -571,7 +571,6 @@
         <!-- I. SUPERFICIAL MYCOSES -->
         <div id="superficial-section" class="section superficial-section active">
             <div class="mnemonic-box">
-                <div class="mnemonic-title">SUPERFICIAL MYCOSES MNEMONIC: "TPP" - "Tinea Patterns Persist"</div>
                 <p><strong>T</strong>inea Versicolor - "Spaghetti and meatballs" on KOH, Malassezia<br>
                 <strong>P</strong>iedra - Nodules on hair shaft (Black & White varieties)<br>
                 <strong>T</strong>inea Nigra - Brown macule on palm, Hortaea werneckii</p>
@@ -710,7 +709,6 @@
         <!-- II. DERMATOPHYTOSES -->
         <div id="dermato-section" class="section dermato-section">
             <div class="mnemonic-box">
-                <div class="mnemonic-title">DERMATOPHYTOSES MNEMONIC: "CCBUMP" - "Clinically Classified By Unique Mycotic Patterns"</div>
                 <p><strong>C</strong>apitis - Scalp, endothrix vs. ectothrix, kerion, favus<br>
                 <strong>C</strong>orporis - Annular lesions, central clearing, raised border<br>
                 <strong>C</strong>ruris - Groin, scrotum typically spared<br>
@@ -1086,14 +1084,7 @@
         
         <!-- III. MALASSEZIA FOLLICULITIS -->
         <div id="malassezia-section" class="section malassezia-section">
-            <div class="mnemonic-box">
-                <div class="mnemonic-title">MALASSEZIA FOLLICULITIS MNEMONIC: "YEAST" - "Young Eruptive Acne-like Sebaceous Triggered"</div>
-                <p><strong>Y</strong>oung adults, common demographic<br>
-                <strong>E</strong>ruption of monomorphic papules and pustules<br>
-                <strong>A</strong>cne-like but no comedones, pruritic<br>
-                <strong>S</strong>ebum-rich areas: upper trunk, arms, neck<br>
-                <strong>T</strong>reatment includes antifungals (oral/topical)</p>
-            </div>
+            
             
             <!-- Malassezia Folliculitis -->
             <div class="disease-card malassezia-card" onclick="toggleCard(this)">
@@ -1142,7 +1133,6 @@
         <!-- IV. SUBCUTANEOUS MYCOSES -->
         <div id="subcutaneous-section" class="section subcutaneous-section">
             <div class="mnemonic-box">
-                <div class="mnemonic-title">SUBCUTANEOUS MYCOSES MNEMONIC: "SCMLBPP" - "Some Cutaneous Mycoses Linger Below Patient's Perception"</div>
                 <p><strong>S</strong>porotrichosis - Rose gardener's disease, lymphocutaneous spread,sphagnum moss,cigar shaped,asteroid bodies, Dimorphic fungus <br>
                 <strong>C</strong>hromoblastomycosis - Verrucous plaques, sclerotic bodies, fonsecaea pedrosoi<br>
                 <strong>M</strong>ycetoma - Triad: swelling, sinuses, grains. <span style="color: #808080; text-shadow: 1px 1px 2px #CCCCCC;">Madurella grisea Dark Grain</span>, <span style="color: #FF0066; text-shadow: 1px 1px 2px #CCCCCC;">Actinomadura pelletieri Red Granules</span>  <br>
@@ -1463,7 +1453,6 @@
         <!-- V. SYSTEMIC MYCOSES -->
         <div id="systemic-section" class="section systemic-section">
             <div class="mnemonic-box">
-                <div class="mnemonic-title">SYSTEMIC MYCOSES MNEMONIC: "HABCAP" - "Highly Aggressive Bugs Cause Alarming Patterns"</div>
                 <p><strong>H</strong>istoplasma - Ohio Valley, small intracellular yeasts<br>
                 <strong>A</strong>spergillus - Septate hyphae with 45° branching<br>
                 <strong>B</strong>lastomyces - Great Lakes, broad-based budding yeasts, Verrucus lesion <br>
@@ -1480,7 +1469,7 @@
                     <div class="key-points">
                         <h4>Clinical Presentation:</h4>
                         <ul>
-                            <li><strong>Appearance (Cutaneous - Disseminated):</strong> Nonspecific. Papules, in HIV, often p/w umbilicated or “molluscoid” , nodules, ulcers, erosions, purpura. Oral ulcers (most commno mucocutaneous presentation in immune competent with disseminated disease).</li>
+                            <li><strong>Appearance (Cutaneous - Disseminated):</strong> Nonspecific. Papules, in HIV, often p/w umbilicated or "molluscoid" , nodules, ulcers, erosions, purpura. Oral ulcers (most commno mucocutaneous presentation in immune competent with disseminated disease).</li>
                             <li><strong>Appearance (Pulmonary - Acute):</strong> Flu-like illness, fever, cough, chest pain. Often self-limited.</li>
                             <li><strong>Appearance (Pulmonary - Chronic):</strong> Cavitary lesions, progressive pulmonary disease (similar to TB).</li>
                             <li><strong>Appearance (Disseminated):</strong> Hepatosplenomegaly, lymphadenopathy, bone marrow involvement, pancytopenia, adrenal insufficiency, CNS involvement (meningitis).</li>
@@ -1491,7 +1480,7 @@
                         <div class="diagnosis-box">
                             <h4>Morphology & Diagnostics:</h4>
                             <ul>
-                                <li><strong>Microscopy:</strong> Small intracellular yeasts within macrophages and histiocytes. looks like leishmaniasis,  yeast in Histoplasmosis have surrounding halo and are more evenly distributed throughout histiocyte cytoplasm; lacks “marquee sign” and kinetoplast)</li>
+                                <li><strong>Microscopy:</strong> Small intracellular yeasts within macrophages and histiocytes. looks like leishmaniasis,  yeast in Histoplasmosis have surrounding halo and are more evenly distributed throughout histiocyte cytoplasm; lacks "marquee sign" and kinetoplast)</li>
                                 <li><strong>Special Stains:</strong> Giemsa, Wright, PAS, Methenamine silver highlight yeasts in tissue (bone marrow, lymph node, skin biopsy).</li>
                                 <li><strong>Culture:</strong> Dimorphic fungus. Mold form at 25°C (tuberculate macroconidia), yeast form at 37°C. Blood, bone marrow, sputum, BAL cultures. Slow growth.</li>
                                 <li><strong>Skin Testing:</strong> Histoplasmin skin testing (indicated only in non-endemic areas).</li>
@@ -2454,14 +2443,18 @@
             }
 
             function performSearch() {
-                const searchTerm = searchInput.value.toLowerCase().trim();
+                const searchInput = document.getElementById('searchInput');
+                const searchText = searchInput.value.toLowerCase().trim();
                 
                 // If search is empty, reset everything
-                if (searchTerm === '') {
+                if (searchText === '') {
                     resetSearch();
                     return;
                 }
 
+                // Split search into individual words
+                const searchTerms = searchText.split(/\s+/).filter(term => term.length > 0);
+                
                 const sections = document.querySelectorAll('.section');
                 let found = false;
 
@@ -2490,9 +2483,11 @@
                     
                     // Check mnemonic boxes
                     mnemonicBoxes.forEach(box => {
-                        if (box.textContent.toLowerCase().includes(searchTerm)) {
+                        const boxText = box.textContent.toLowerCase();
+                        // Check if all search terms are included in the text
+                        if (searchTerms.every(term => boxText.includes(term))) {
                             box.classList.add('has-match');
-                            highlightText(box, searchTerm);
+                            highlightText(box, searchTerms);
                             sectionHasMatch = true;
                         }
                     });
@@ -2503,19 +2498,23 @@
                         const cardTitle = card.querySelector('h3');
                         
                         // Check card title
-                        if (cardTitle && cardTitle.textContent.toLowerCase().includes(searchTerm)) {
-                            cardTitle.classList.add('has-match');
-                            highlightText(cardTitle, searchTerm);
-                            cardHasMatch = true;
+                        if (cardTitle) {
+                            const titleText = cardTitle.textContent.toLowerCase();
+                            if (searchTerms.every(term => titleText.includes(term))) {
+                                cardTitle.classList.add('has-match');
+                                highlightText(cardTitle, searchTerms);
+                                cardHasMatch = true;
+                            }
                         }
                         
                         // Check within card content - target specific sections
                         const contentBlocks = card.querySelectorAll('.key-points, .diagnosis-box, .treatment-box, .key-points div, h4');
                         
                         contentBlocks.forEach(block => {
-                            if (block.textContent.toLowerCase().includes(searchTerm)) {
+                            const blockText = block.textContent.toLowerCase();
+                            if (searchTerms.every(term => blockText.includes(term))) {
                                 block.classList.add('has-match');
-                                highlightText(block, searchTerm);
+                                highlightText(block, searchTerms);
                                 cardHasMatch = true;
                             }
                         });
@@ -2550,7 +2549,7 @@
                 }
             }
 
-            function highlightText(element, searchTerm) {
+            function highlightText(element, searchTerms) {
                 const walker = document.createTreeWalker(
                     element,
                     NodeFilter.SHOW_TEXT,
@@ -2566,12 +2565,20 @@
 
                 nodes.forEach(node => {
                     const text = node.textContent;
-                    if (text.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    const lowerText = text.toLowerCase();
+                    
+                    // Check if any of the search terms is in this text node
+                    if (searchTerms.some(term => lowerText.includes(term))) {
                         const span = document.createElement('span');
+                        
+                        // Create a regex pattern that includes all search terms
+                        const regexPattern = searchTerms
+                            .map(term => term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'))
+                            .join('|');
                         
                         // Use case-insensitive regex with global flag to find all occurrences
                         span.innerHTML = text.replace(
-                            new RegExp(`(${searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi'),
+                            new RegExp(`(${regexPattern})`, 'gi'),
                             '<mark>$1</mark>'
                         );
                         
